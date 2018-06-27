@@ -43,7 +43,6 @@ Partial Public Class App
 
         RegisterServices()
         AddHandler RootFrame.Navigated, AddressOf OnNavigated
-
     End Sub
 
 #Region "Navigation"
@@ -75,6 +74,7 @@ Partial Public Class App
         ' Services
         builder.RegisterType(Of NavigationService).As(Of INavigationService)()
         builder.RegisterType(Of DialogService).As(Of IDialogService)()
+        builder.RegisterType(Of MessageBus).As(Of IMessageBus)()
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
 
         ' ViewModels
@@ -89,7 +89,11 @@ Partial Public Class App
     ' Code to execute when the application is launching (eg, from Start)
     ' This code will not execute when the application is reactivated
     Private Sub Application_Launching(ByVal sender As Object, ByVal e As LaunchingEventArgs)
-        'Dim navigationService = ServiceProvider.GetService(Of INavigationService)()
+#If DEBUG Then
+        Dim settingService As ISettingsService = Container.Resolve(Of ISettingsService)()
+        settingService.SaveZipCodesAsync(New List(Of String) From {"ZipCode1", "ZipCode2", "ZipCode3", "ZipCode4", "ZipCode5", "ZipCode6", "ZipCode7", "ZipCode8", "ZipCode9", "ZipCode10"})
+#End If
+
         Dim navigationService = Container.Resolve(Of INavigationService)()
         navigationService.NavigateTo(Of StartupViewModel)()
     End Sub

@@ -14,9 +14,6 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" 
     d:DataContext="{d:DesignData /SampleData/ZipCodeListViewModelSampleData.xaml}">
-    <phone:PhoneApplicationPage.Resources>
-        <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
-    </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -33,31 +30,19 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            
-            <StackPanel>
-                <TextBlock Text="There are no zip codes."
-                           Visibility="{Binding Path=ZipCodesCollection.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=false}" />
-                <Button Command="{Binding Path=AddCommand}">Add Zip Code</Button>
-            </StackPanel>
-
-            <ListBox Grid.Row="1" ItemsSource="{Binding Path=ZipCodesCollection}"
-                     Visibility="{Binding Path=ZipCodesCollection.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=true}">
+            <ListBox x:Name="listBox" ItemsSource="{Binding Path=ZipCodesCollection}">
+                <ListBox.Resources>
+                    <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Button>Edit</Button>
-                            <TextBlock Text="{Binding}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                            <Button Command="{Binding RemoveCommand}">Edit</Button>
+                            <TextBlock Text="{Binding ZipCode}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <TextBlock Text="{Binding Status}" Grid.Row="2" Style="{StaticResource PhoneTextNormalStyle}" />
         </Grid>
     </Grid>
 

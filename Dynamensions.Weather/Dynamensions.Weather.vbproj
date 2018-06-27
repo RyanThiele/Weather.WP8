@@ -152,6 +152,8 @@
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
+    <Compile Include="Messages\RemoveZipCodeMessage.vb" />
+    <Compile Include="RelayCommandWithParameter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Service References\gov.weather.com\Reference.vb">
@@ -167,6 +169,7 @@
     <Compile Include="Services\SettingsService.vb" />
     <Compile Include="ViewModels\StartupViewModel.vb" />
     <Compile Include="ViewModels\ViewModelBase.vb" />
+    <Compile Include="ViewModels\ZipCodeListItemViewModel.vb" />
     <Compile Include="ViewModels\ZipCodeListViewModel.vb" />
     <Compile Include="Views\StartupView.xaml.vb">
       <DependentUpon>StartupView.xaml</DependentUpon>
@@ -213,7 +216,6 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Messages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
