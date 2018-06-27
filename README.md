@@ -1,2 +1,2 @@
 # Weather.WP7
-A weather project ustilizing NOAA's weather services.
+A weather project utilizing NOAA's weather services.
