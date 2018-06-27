@@ -74,6 +74,7 @@ Partial Public Class App
 
         ' Services
         builder.RegisterType(Of NavigationService).As(Of INavigationService)()
+        builder.RegisterType(Of DialogService).As(Of IDialogService)()
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
 
         ' ViewModels

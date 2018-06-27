@@ -47,10 +47,34 @@ Public Class ZipCodeListViewModel
     End Function
 
     Private Sub ExecuteAdd()
-
+        _navigationService.ShowOkDialog("Title", "Test")
     End Sub
 
 #End Region
+
+
+#Region "RemoveCommand"
+    Dim _RemoveCommand As ICommand
+    Public ReadOnly Property RemoveCommand As ICommand
+        Get
+            If _RemoveCommand Is Nothing Then
+                _RemoveCommand = New Commands.RelayCommand(AddressOf ExecuteRemove, AddressOf CanExecuteRemove)
+            End If
+
+            Return _RemoveCommand
+        End Get
+    End Property
+
+    Private Function CanExecuteRemove() As Boolean
+        Return True
+    End Function
+
+    Private Sub ExecuteRemove()
+        If (_navigationService) Then
+    End Sub
+
+#End Region
+
 
 #End Region
 

@@ -42,7 +42,7 @@
             <StackPanel>
                 <TextBlock Text="There are no zip codes."
                            Visibility="{Binding Path=ZipCodesCollection.Count, Converter={StaticResource CountToVisibilityConverter}, ConverterParameter=false}" />
-                <Button>Add Zip Code</Button>
+                <Button Command="{Binding Path=AddCommand}">Add Zip Code</Button>
             </StackPanel>
 
             <ListBox Grid.Row="1" ItemsSource="{Binding Path=ZipCodesCollection}"

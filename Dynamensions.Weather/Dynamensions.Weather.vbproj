@@ -150,7 +150,6 @@
     </Compile>
     <Compile Include="Buses\Busses.vb" />
     <Compile Include="Buses\IMessageBus.vb" />
-    <Compile Include="Buses\IServiceBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -160,7 +159,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Buses\ServiceBus.vb" />
+    <Compile Include="Services\DialogService.vb" />
+    <Compile Include="Services\IDialogService.vb" />
     <Compile Include="Services\INavigationService.vb" />
     <Compile Include="Services\ISettingsService.vb" />
     <Compile Include="Services\NavigationService.vb" />
