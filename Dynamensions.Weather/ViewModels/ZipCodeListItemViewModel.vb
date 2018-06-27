@@ -6,6 +6,10 @@ Public Class ZipCodeListItemViewModel
     Private ReadOnly _dialogService As IDialogService
     Private ReadOnly _messageBus As IMessageBus
 
+    Public Sub New()
+
+    End Sub
+
     Public Sub New(dialogService As IDialogService, messageBus As IMessageBus)
         _dialogService = dialogService
         _messageBus = messageBus
