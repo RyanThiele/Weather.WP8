@@ -1,8 +1,6 @@
 ﻿Public Class ViewModelBase
     Inherits ObservableObject
 
-
-
     Public Overridable Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
         Await DelayAsync(20)
     End Function

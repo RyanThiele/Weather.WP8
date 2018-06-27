@@ -13,18 +13,34 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
-    <phone:PhoneApplicationPage.DataContext>
-        <local:MainViewModel />
-    </phone:PhoneApplicationPage.DataContext>
+    shell:SystemTray.IsVisible="True" 
+    d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
         <controls:Pivot Title="Dynacast Weather">
+           
             <!--Pivot item one-->
-            <controls:PivotItem Header="item1" >
-                <Grid/>
+            <controls:PivotItem Header="item1" DataContext="{Binding Path=WeatherSourcesViewModel}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="{Binding Path=Title}" />
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Path=WeatherSources}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding Path=RemoveCommand}">Remove</Button>
+                                    <TextBlock Text="{Binding Path=DisplayString}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->

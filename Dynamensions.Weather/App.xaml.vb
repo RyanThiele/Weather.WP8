@@ -78,8 +78,9 @@ Partial Public Class App
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
 
         ' ViewModels
-        builder.RegisterType(GetType(StartupViewModel))
-        builder.RegisterType(GetType(ZipCodeListViewModel))
+        builder.RegisterType(GetType(MainViewModel))
+        'builder.RegisterType(GetType(StartupViewModel))
+        'builder.RegisterType(GetType(ZipCodeListViewModel))
 
         Container = builder.Build()
 
@@ -91,11 +92,20 @@ Partial Public Class App
     Private Sub Application_Launching(ByVal sender As Object, ByVal e As LaunchingEventArgs)
 #If DEBUG Then
         Dim settingService As ISettingsService = Container.Resolve(Of ISettingsService)()
-        settingService.SaveZipCodesAsync(New List(Of String) From {"ZipCode1", "ZipCode2", "ZipCode3", "ZipCode4", "ZipCode5", "ZipCode6", "ZipCode7", "ZipCode8", "ZipCode9", "ZipCode10"})
+
+        Dim weatherSources As New List(Of WeatherSource)
+        For index = 1 To 10
+            weatherSources.Add(New WeatherSource() With {
+                               .ZipCode = "ZC" & index,
+                               .WeatherStationId = "WSID" & index,
+                               .City = "City" & index,
+                               .State = "State" & index})
+        Next
+        settingService.SaveWeatherSourcesAsync(weatherSources)
 #End If
 
         Dim navigationService = Container.Resolve(Of INavigationService)()
-        navigationService.NavigateTo(Of StartupViewModel)()
+        navigationService.NavigateTo(Of MainViewModel)()
     End Sub
 
     ' Code to execute when the application is activated (brought to foreground)

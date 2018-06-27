@@ -4,7 +4,6 @@ Public Class SettingsService
     Implements ISettingsService
 
 
-
     Public Function LoadZipCodesAsync() As Task(Of IEnumerable(Of String)) Implements ISettingsService.LoadZipCodesAsync
         Dim tcs As New TaskCompletionSource(Of IEnumerable(Of String))
 
@@ -28,24 +27,25 @@ Public Class SettingsService
         Return tcs.Task
     End Function
 
-    Public Function GetWeatherSourcesAsync() As Task(Of DataResult(Of IEnumerable(Of WeatherSource))) Implements ISettingsService.GetWeatherSourcesAsync
-        Dim tcs As New TaskCompletionSource(Of DataResult(Of IEnumerable(Of WeatherSource)))
+    Public Function GetWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource)) Implements ISettingsService.GetWeatherSourcesAsync
+        Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherSource))
 
-        Dim items As IEnumerable(Of WeatherSource) = Nothing
-        Dim errorMessage As String = Nothing
-        Dim exception As Exception = Nothing
+        Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
+        If settings.Contains("WeatherSources") Then
+            tcs.SetResult(CType(settings("WeatherSources"), IEnumerable(Of WeatherSource)))
+        Else
+            tcs.SetResult(Nothing)
+        End If
 
-        Try
-            Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
-            If settings.Contains("WeatherSources") Then
-                items = (CType(settings("WeatherSources"), IEnumerable(Of WeatherSource)))
-            End If
-        Catch ex As Exception
-            errorMessage = "Cannot load Weather Sources from settings: " & ex.Message & "."
-            exception = ex
-        End Try
+        Return tcs.Task
+    End Function
 
-        tcs.SetResult(New DataResult(Of IEnumerable(Of WeatherSource))(items, errorMessage, exception))
+    Public Function SaveWeatherSourcesAsync(weatherSources As IEnumerable(Of WeatherSource)) As Task Implements ISettingsService.SaveWeatherSourcesAsync
+        Dim tcs As New TaskCompletionSource(Of Boolean)
+
+        Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
+        settings("WeatherSources") = weatherSources.ToList()
+
         Return tcs.Task
     End Function
 End Class

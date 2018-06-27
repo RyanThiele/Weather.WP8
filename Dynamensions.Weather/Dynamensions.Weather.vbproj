@@ -153,7 +153,7 @@
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
-    <Compile Include="Messages\RemoveZipCodeMessage.vb" />
+    <Compile Include="Messages\RemoveWeatherSourceMessage.vb" />
     <Compile Include="Models\DataResult.vb" />
     <Compile Include="Models\WeatherSource.vb" />
     <Compile Include="RelayCommandWithParameter.vb" />
@@ -170,21 +170,14 @@
     <Compile Include="Services\ISettingsService.vb" />
     <Compile Include="Services\NavigationService.vb" />
     <Compile Include="Services\SettingsService.vb" />
+    <Compile Include="ViewModels\AddWeatherSourceViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
+    <Compile Include="ViewModels\WeatherSourceListItemViewModel.vb" />
     <Compile Include="ViewModels\_ObservableObject.vb" />
-    <Compile Include="ViewModels\StartupViewModel.vb" />
     <Compile Include="ViewModels\_ViewModelBase.vb" />
     <Compile Include="ViewModels\WeatherSourcesViewModel.vb" />
-    <Compile Include="ViewModels\ZipCodeListItemViewModel.vb" />
-    <Compile Include="ViewModels\ZipCodeListViewModel.vb" />
     <Compile Include="Views\MainView.xaml.vb">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StartupView.xaml.vb">
-      <DependentUpon>StartupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ZipCodeListView.xaml.vb">
-      <DependentUpon>ZipCodeListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -193,14 +186,6 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Views\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StartupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ZipCodeListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,6 +215,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <DesignData Include="SampleData\MainViewModelSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DesignData>
     <DesignData Include="SampleData\ZipCodeListViewModelSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DesignData>
