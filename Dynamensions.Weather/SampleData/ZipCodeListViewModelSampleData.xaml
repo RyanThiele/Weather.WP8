@@ -1,0 +1,14 @@
+<Weather:ZipCodeListViewModel xmlns:Weather="clr-namespace:Dynamensions.Weather" xmlns:System="clr-namespace:System;assembly=mscorlib">
+	<Weather:ZipCodeListViewModel.ZipCodesCollection>
+        <Weather:ZipCodeListItemViewModel ZipCode="Curabitur aenean maecenas vestibulum phasellus" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Adipiscing consequat class" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Nam cras convallis parturient" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Duis sed dis dignissim nunc" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Elementum amet vestibulum facilisis praesent" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Curae vestibulum aliquam est mauris" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Nullam integer quisque ante adipiscing" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Parturient hac vivamus" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Aliquam arcu" />
+        <Weather:ZipCodeListItemViewModel ZipCode="Accumsan leo" />
+    </Weather:ZipCodeListViewModel.ZipCodesCollection>
+</Weather:ZipCodeListViewModel>

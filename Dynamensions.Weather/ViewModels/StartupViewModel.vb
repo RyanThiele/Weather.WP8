@@ -19,20 +19,6 @@
 
 #Region "Properties"
 
-#Region "Status"
-
-    Dim _Status As String
-    Public Property Status As String
-        Get
-            Return _Status
-        End Get
-        Set(value As String)
-            _Status = value
-            OnPropertyChanged("Status")
-        End Set
-    End Property
-
-#End Region
 
 #End Region
 
@@ -43,14 +29,17 @@
 
     Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As System.Threading.Tasks.Task
         Status = "Checking Data Integrity..."
-        Dim zipCodes As IEnumerable(Of String) = Await _settingsService.LoadZipCodesAsync()
-        If (zipCodes Is Nothing) Then
-            Status = "No Zip Codes Found. Navigating to Zip Codes"
-            _navigationService.NavigateTo(Of ZipCodeListViewModel)()
-            Return
-        End If
-
-        Status = "Done!"
+        Try
+            Dim zipCodes As IEnumerable(Of String) = Await _settingsService.LoadZipCodesAsync()
+            If (zipCodes Is Nothing) Then
+                Status = "No Zip Codes Found. Navigating to Zip Codes"
+                _navigationService.NavigateTo(Of ZipCodeListViewModel)()
+                Return
+            End If
+            Status = "Done!"
+        Catch ex As Exception
+            Status = "There was an error verifying the integrety of the data: " & ex.Message
+        End Try
     End Function
 
 #End Region

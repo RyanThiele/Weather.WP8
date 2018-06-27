@@ -22,7 +22,7 @@ Public Class SettingsService
         Dim tcs As New TaskCompletionSource(Of Boolean)
 
         Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
-        settings("ZipCodes") = zipCodes
+        settings("ZipCodes") = zipCodes.ToList()
         
         Return tcs.Task
     End Function
