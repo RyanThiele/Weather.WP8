@@ -32,6 +32,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -151,6 +152,7 @@
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\IServiceBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
+    <Compile Include="Converters\CountToVisibilityConverter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Service References\gov.weather.com\Reference.vb">
@@ -211,14 +213,13 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\gov.weather.com\" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Messages\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\ZipCodeListViewModelSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DesignData>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.VisualBasic.targets" />

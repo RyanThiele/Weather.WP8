@@ -4,7 +4,7 @@ Public Class ZipCodeListViewModel
 
     ' Services
     Private ReadOnly _navigationService As INavigationService
-
+    Private ReadOnly _settingsService As ISettingsService
 
 #Region "Constructors"
 
@@ -12,15 +12,16 @@ Public Class ZipCodeListViewModel
 
     End Sub
 
-    Public Sub New(navigationService As INavigationService)
+    Public Sub New(navigationService As INavigationService, settingsService As ISettingsService)
         _navigationService = navigationService
+        _settingsService = settingsService
     End Sub
 
 #End Region
 
 #Region "Properties"
 
-    Property ZipCodes As ObservableCollection(Of String)
+    Property ZipCodesCollection As New ObservableCollection(Of String)
 
 #End Region
 
@@ -55,8 +56,14 @@ Public Class ZipCodeListViewModel
 
 #Region "Methods"
 
-    Public Overrides Function InitializeAsync(Optional parameter As Object = Nothing) As System.Threading.Tasks.Task
-        Return MyBase.InitializeAsync(parameter)
+    Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As System.Threading.Tasks.Task
+        Try
+            Dim zipCodes As IEnumerable(Of String) = Await _settingsService.LoadZipCodesAsync()
+            ZipCodesCollection = New ObservableCollection(Of String)(zipCodes)
+            OnPropertyChanged("ZipCodesCollection")
+        Catch ex As Exception
+            Status = "There was an error retrieving the zip codes: " & ex.Message
+        End Try
     End Function
 
 #End Region
