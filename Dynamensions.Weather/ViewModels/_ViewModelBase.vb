@@ -1,21 +1,6 @@
-﻿Imports System.Threading
-Imports System.Threading.Tasks
-Imports System.ComponentModel
-Imports System.Runtime.CompilerServices
+﻿Public Class ViewModelBase
+    Inherits ObservableObject
 
-Public Class ViewModelBase
-    Implements INotifyPropertyChanged
-
-#Region "INotifyPropertyChanged Implentation"
-
-    Public Event PropertyChanged(sender As Object, e As PropertyChangedEventArgs) Implements INotifyPropertyChanged.PropertyChanged
-
-    Protected Sub OnPropertyChanged(<CallerMemberName> Optional propertyName As String = Nothing)
-        If String.IsNullOrWhiteSpace(propertyName) Then Return
-        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-    End Sub
-
-#End Region
 
 
     Public Overridable Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
