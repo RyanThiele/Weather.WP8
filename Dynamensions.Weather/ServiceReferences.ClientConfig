@@ -1,0 +1,16 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="ndfdXMLBinding" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+                    <security mode="Transport" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="https://graphical.weather.gov/xml/SOAP_server/ndfdXMLserver.php"
+                binding="basicHttpBinding" bindingConfiguration="ndfdXMLBinding"
+                contract="gov.weather.com.ndfdXMLPortType" name="ndfdXMLPort" />
+        </client>
+    </system.serviceModel>
+</configuration>
