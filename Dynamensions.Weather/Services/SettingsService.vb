@@ -7,6 +7,7 @@ Imports System.ComponentModel
 Imports System.Collections.ObjectModel
 Imports System.Linq
 
+
 <Table>
 Public Class Test
     <Column> Public Property Stuff
@@ -17,6 +18,7 @@ Public Class SettingsService
 
     Private ReadOnly _messageBus As IMessageBus
     Private Const RESET_STATUS As String = "Resetting Data. This could take a while depending on your phone speed."
+    Private Const METAR_STATIONS_ADDRESS As String = "https://www.aviationweather.gov/static/adds/metars/stations.txt"
 
 
     Public Sub New(messageBus As IMessageBus)
@@ -24,6 +26,12 @@ Public Class SettingsService
     End Sub
 
 #Region "Helpers"
+
+    Private Async Function DownloadStationsAsync() As Task(Of String)
+        Dim client As New WebClient
+        Return Await client.DownloadStringTaskAsync(METAR_STATIONS_ADDRESS)
+        client = Nothing
+    End Function
 
     Private Async Function ParseLocationsAsync() As Task
         Dim total As Long
@@ -133,5 +141,10 @@ Public Class SettingsService
         _messageBus.Publish(New StatusMessage With {.Status = RESET_STATUS, .SubStatus = "Parsing Zip Codes..."})
         Await ParseLocationsAsync()
 
+    End Function
+
+    Public Async Function RefreshStationsAsync() As Task Implements ISettingsService.RefreshStationsAsync
+        Dim stationsText As String = Await DownloadStationsAsync()
+        If String.IsNullOrWhiteSpace(stationsText) Then Await ParseLocationsAsync()
     End Function
 End Class

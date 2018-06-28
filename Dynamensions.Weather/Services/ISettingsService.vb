@@ -2,6 +2,7 @@
 
 Public Interface ISettingsService
     Function ResetDatabaseAsync() As Task
+    Function RefreshStationsAsync() As Task
 
 
     Function GetWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource))
