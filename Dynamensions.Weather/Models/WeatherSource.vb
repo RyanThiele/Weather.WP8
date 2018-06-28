@@ -4,9 +4,8 @@
 ''' <remarks>A structure is used as they are lightweight.</remarks>
 Public Structure WeatherSource
 
-    Friend WeatherStationId As String
-    Friend City As String
-    Friend State As String
     Friend ZipCode As String
+    Friend Latitude As Decimal
+    Friend Longitude As Decimal
 
 End Structure

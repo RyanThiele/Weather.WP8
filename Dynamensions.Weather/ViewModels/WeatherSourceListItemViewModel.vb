@@ -16,9 +16,6 @@
         _messageBus = messageBus
         _model = model
 
-        WeatherStationId = model.WeatherStationId
-        City = model.City
-        State = model.State
         ZipCode = model.ZipCode
 
         DisplayString = ZipCode & " (" & WeatherStationId & ")"

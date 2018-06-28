@@ -18,8 +18,18 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="{Binding Path=Status}" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding Path=SubStatus}" TextWrapping="Wrap" />
+            <ProgressBar Value="{Binding Path=Progress}" />
+        </StackPanel>
+        
         <!--Pivot Control-->
-        <controls:Pivot Title="Dynacast Weather">
+        <controls:Pivot Title="Dynacast Weather" Grid.Row="1">
            
             <!--Pivot item one-->
             <controls:PivotItem Header="item1" DataContext="{Binding Path=WeatherSourcesViewModel}" >
@@ -47,6 +57,7 @@
             <controls:PivotItem Header="item2">
                 <Grid/>
             </controls:PivotItem>
+           
         </controls:Pivot>
     </Grid>
 

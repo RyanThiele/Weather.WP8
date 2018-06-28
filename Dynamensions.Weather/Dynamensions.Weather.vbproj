@@ -73,19 +73,7 @@
       <HintPath>..\packages\Autofac.Wp7.2.4.5.725\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Caliburn.Micro, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.2.0\lib\SL40-wp\Caliburn.Micro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Extensions, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.2.0\lib\SL40-wp\Caliburn.Micro.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.WindowsPhone7.4.1.0\lib\sl4-windowsphone71\Microsoft.Practices.Prism.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -99,6 +87,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="system.data.linq" />
     <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\sl4-windowsphone71\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -113,10 +102,6 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.2.0\lib\SL40-wp\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -124,6 +109,7 @@
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -153,23 +139,25 @@
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
+    <Compile Include="DatabaseHelper.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="Messages\RemoveWeatherSourceMessage.vb" />
+    <Compile Include="Messages\StatusMessage.vb" />
     <Compile Include="Models\DataResult.vb" />
+    <Compile Include="Models\Location.vb" />
     <Compile Include="Models\WeatherSource.vb" />
     <Compile Include="RelayCommandWithParameter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="RelayCommand.vb" />
-    <Compile Include="Service References\gov.weather.com\Reference.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
+    <Compile Include="Services\DataContext.vb" />
     <Compile Include="Services\DialogService.vb" />
     <Compile Include="Services\IDialogService.vb" />
     <Compile Include="Services\INavigationService.vb" />
     <Compile Include="Services\ISettingsService.vb" />
+    <Compile Include="Services\IWeatherService.vb" />
     <Compile Include="Services\NavigationService.vb" />
     <Compile Include="Services\SettingsService.vb" />
+    <Compile Include="Services\WeatherService.vb" />
     <Compile Include="ViewModels\AddWeatherSourceViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
     <Compile Include="ViewModels\WeatherSourceListItemViewModel.vb" />
@@ -191,12 +179,20 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Weather.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="My Project\AppManifest.xml" />
     <None Include="My Project\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Service References\gov.weather.com\ndfdXML.wsdl" />
+    <EmbeddedResource Include="Resources\ZipCodes.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="SampleResponses\ZipCodeList.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -205,15 +201,9 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Service References\gov.weather.com\configuration91.svcinfo" />
-    <None Include="Service References\gov.weather.com\configuration.svcinfo" />
-    <None Include="Service References\gov.weather.com\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.vb</LastGenOutput>
-    </None>
+    <Content Include="SampleResponses\ZipCodeList.xml" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <DesignData Include="SampleData\MainViewModelSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>

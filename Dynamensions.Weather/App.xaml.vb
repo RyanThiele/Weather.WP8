@@ -1,6 +1,5 @@
 ﻿Imports System.Reflection
 Imports Autofac
-Imports Caliburn.Micro
 
 Partial Public Class App
     Inherits Application
@@ -43,6 +42,16 @@ Partial Public Class App
 
         RegisterServices()
         AddHandler RootFrame.Navigated, AddressOf OnNavigated
+
+        Using db As New DbDataContext(DbDataContext.DBConnectionString)
+            If Not db.DatabaseExists Then db.CreateDatabase()
+
+            'db.Locations.InsertOnSubmit(New Location() With {.ZipCode = 10100, .City = "Test", .StateOrProvince = "Test", .StateOrProvinceAbbreviation = "Test", .County = "Test", .Latitude = 1, .Longitude = 2})
+            'db.SubmitChanges()
+        End Using
+
+
+        'DatabaseHelper.MoveReferenceDatabase("Weather.sdf")
     End Sub
 
 #Region "Navigation"
@@ -74,8 +83,9 @@ Partial Public Class App
         ' Services
         builder.RegisterType(Of NavigationService).As(Of INavigationService)()
         builder.RegisterType(Of DialogService).As(Of IDialogService)()
-        builder.RegisterType(Of MessageBus).As(Of IMessageBus)()
+        builder.RegisterType(Of MessageBus).As(Of IMessageBus).SingleInstance()
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
+        builder.RegisterType(Of WeatherService).As(Of IWeatherService)()
 
         ' ViewModels
         builder.RegisterType(GetType(MainViewModel))
@@ -92,16 +102,12 @@ Partial Public Class App
     Private Sub Application_Launching(ByVal sender As Object, ByVal e As LaunchingEventArgs)
 #If DEBUG Then
         Dim settingService As ISettingsService = Container.Resolve(Of ISettingsService)()
-
-        Dim weatherSources As New List(Of WeatherSource)
-        For index = 1 To 10
-            weatherSources.Add(New WeatherSource() With {
-                               .ZipCode = "ZC" & index,
-                               .WeatherStationId = "WSID" & index,
-                               .City = "City" & index,
-                               .State = "State" & index})
-        Next
-        settingService.SaveWeatherSourcesAsync(weatherSources)
+        'Dim weatherSources As New List(Of WeatherSource)
+        'For index = 1 To 10
+        '    weatherSources.Add(New WeatherSource() With {
+        '                       .ZipCode = "ZC" & index})
+        'Next
+        'settingService.SaveWeatherSourcesAsync(weatherSources)
 #End If
 
         Dim navigationService = Container.Resolve(Of INavigationService)()

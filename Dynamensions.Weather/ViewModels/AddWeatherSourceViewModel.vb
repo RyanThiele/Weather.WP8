@@ -20,6 +20,24 @@
 #End Region
 
 #Region "Properties"
+
+
+#Region "ZipCode"
+
+    Dim _ZipCode As String
+    Public Property ZipCode As String
+        Get
+            Return _ZipCode
+        End Get
+        Set(value As String)
+            _ZipCode = value
+            OnPropertyChanged("ZipCode")
+        End Set
+    End Property
+
+#End Region
+
+
 #End Region
 
 #Region "Commands"
