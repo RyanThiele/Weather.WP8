@@ -1,0 +1,18 @@
+<Weather:MainViewModel xmlns:Weather="clr-namespace:Dynamensions.Weather" Status="Parturient vel" Title="Nam amet">
+    <Weather:MainViewModel.WeatherSourcesViewModel>
+        <Weather:WeatherSourcesViewModel Title="Class nam curabitur">
+            <Weather:WeatherSourcesViewModel.WeatherSources>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id1" City="City1" State="State1" ZipCode="ZipCode1" DisplayString="ZipCode1 (ID1)" />
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id2" City="City2" State="State2" ZipCode="ZipCode2" DisplayString="ZipCode2 (ID2)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id3" City="City3" State="State3" ZipCode="ZipCode3" DisplayString="ZipCode3 (ID3)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id4" City="City4" State="State4" ZipCode="ZipCode4" DisplayString="ZipCode4 (ID4)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id5" City="City5" State="State5" ZipCode="ZipCode5" DisplayString="ZipCode5 (ID5)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id6" City="City6" State="State6" ZipCode="ZipCode6" DisplayString="ZipCode6 (ID6)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id7" City="City7" State="State7" ZipCode="ZipCode7" DisplayString="ZipCode7 (ID7)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id8" City="City8" State="State8" ZipCode="ZipCode8" DisplayString="ZipCode8 (ID8)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id9" City="City9" State="State9" ZipCode="ZipCode9" DisplayString="ZipCode9 (ID9)"/>
+                <Weather:WeatherSourceListItemViewModel WeatherStationId="Id10" City="City10" State="State10" ZipCode="ZipCode10" DisplayString="ZipCode10 (ID10)"/>
+            </Weather:WeatherSourcesViewModel.WeatherSources>
+        </Weather:WeatherSourcesViewModel>
+    </Weather:MainViewModel.WeatherSourcesViewModel>
+</Weather:MainViewModel>
