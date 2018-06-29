@@ -20,12 +20,13 @@
         _settingsService = settingsService
         _weatherService = weatherService
 
-        _messageBus.Subscribe(Of RemoveWeatherSourceMessage)(AddressOf OnRemoveWeatherSource)
         _messageBus.Subscribe(Of StatusMessage)(Sub(message)
                                                     Status = message.Status
                                                     SubStatus = message.SubStatus
                                                     Progress = message.Progress
                                                 End Sub)
+
+        WeatherSourcesViewModel = New WeatherSourcesViewModel(messageBus, dialogService, navigationService, settingsService)
     End Sub
 
 #End Region
@@ -80,12 +81,7 @@
     ''' </remarks>
     Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
         Try
-
-            Await _weatherService.GetClosestWeatherSourceByZipCodeAsync("46845")
-
-            Dim locations = Await _settingsService.LoadLocationsAsync
-
-            Await _settingsService.ResetDatabaseAsync
+            Await WeatherSourcesViewModel.InitializeAsync()
         Catch ex As Exception
             ' TODO: We need to recover here!
             Throw
@@ -93,33 +89,8 @@
 
     End Function
 
-    Private Async Function LoadWeatherSourcesAsync() As Task
-        ' Do we have weather sources?
-        Dim weatherSources As IEnumerable(Of WeatherSource) = Await _settingsService.GetWeatherSourcesAsync()
-        If weatherSources IsNot Nothing Then
-            Dim weatherSourceViewModels As IEnumerable(Of WeatherSourceListItemViewModel)
 
-            weatherSourceViewModels = weatherSources.Select(Function(model) New WeatherSourceListItemViewModel(_dialogService, _messageBus, model))
-            WeatherSourcesViewModel.WeatherSources = New ObservableCollection(Of WeatherSourceListItemViewModel)(weatherSourceViewModels)
-        End If
-    End Function
 
-    Private Async Sub OnRemoveWeatherSource(message As RemoveWeatherSourceMessage)
-        Try
-            Dim weatherSources As New List(Of WeatherSource)(WeatherSourcesViewModel.WeatherSources.Select(Function(viewModel) New WeatherSource() With {
-                                                                                                               .ZipCode = viewModel.ZipCode}))
-            weatherSources.Remove(message.WeatherSource)
-            Dim weatherSourceViewModels As IEnumerable(Of WeatherSourceListItemViewModel)
-
-            weatherSourceViewModels = weatherSources.Select(Function(model) New WeatherSourceListItemViewModel(_dialogService, _messageBus, model))
-            WeatherSourcesViewModel.WeatherSources = New ObservableCollection(Of WeatherSourceListItemViewModel)(weatherSourceViewModels)
-
-            Await _settingsService.SaveWeatherSourcesAsync(weatherSources)
-
-        Catch ex As Exception
-
-        End Try
-    End Sub
 
 #End Region
 

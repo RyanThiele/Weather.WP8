@@ -1,5 +1,17 @@
-﻿Public Class ViewModelBase
+﻿Imports System.Linq
+Imports System.Reflection
+
+Public Class ViewModelBase
     Inherits ObservableObject
+
+    Private Const APPMANIFESTNAME As String = "WMAppManifest.xml"
+
+
+
+    Public Sub New()
+        Dim AssemblyTitleAttributes As AssemblyTitleAttribute() = CType(Assembly.GetExecutingAssembly().GetCustomAttributes(GetType(AssemblyTitleAttribute), False), AssemblyTitleAttribute())
+        _applicationTitle = AssemblyTitleAttributes.Select(Function(a) a.Title).FirstOrDefault()
+    End Sub
 
     Public Overridable Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
         Await DelayAsync(20)
@@ -16,6 +28,12 @@
 
 #Region "Properties"
 
+    Private _applicationTitle As String
+    Public ReadOnly Property ApplicationTitle As String
+        Get
+            Return _applicationTitle
+        End Get
+    End Property
 
 #Region "Title"
 

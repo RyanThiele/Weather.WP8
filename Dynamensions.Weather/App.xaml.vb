@@ -89,6 +89,7 @@ Partial Public Class App
 
         ' ViewModels
         builder.RegisterType(GetType(MainViewModel))
+        builder.RegisterType(GetType(AddWeatherSourceViewModel))
         'builder.RegisterType(GetType(StartupViewModel))
         'builder.RegisterType(GetType(ZipCodeListViewModel))
 

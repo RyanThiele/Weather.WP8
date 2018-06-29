@@ -29,17 +29,13 @@
         </StackPanel>
         
         <!--Pivot Control-->
-        <controls:Pivot Title="Dynacast Weather" Grid.Row="1">
+        <controls:Pivot Title="{Binding ApplicationTitle}" Grid.Row="1">
            
             <!--Pivot item one-->
             <controls:PivotItem Header="item1" DataContext="{Binding Path=WeatherSourcesViewModel}" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    
+                <StackPanel>
                     <TextBlock Text="{Binding Path=Title}" />
+                    <Button Command="{Binding Path=AddWeatherSourceCommand}">Add</Button>
                     <ListBox Grid.Row="1" ItemsSource="{Binding Path=WeatherSources}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -50,7 +46,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </Grid>
+                </StackPanel>
             </controls:PivotItem>
 
             <!--Pivot item two-->

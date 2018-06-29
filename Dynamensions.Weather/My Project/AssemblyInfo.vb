@@ -8,12 +8,12 @@ Imports System.Resources
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-<Assembly: AssemblyTitle("Dynamensions.Weather")> 
+<Assembly: AssemblyTitle("Weather")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyConfiguration("")> 
-<Assembly: AssemblyCompany("Microsoft Corp.")> 
+<Assembly: AssemblyCompany("Dynasmensions")> 
 <Assembly: AssemblyProduct("Dynamensions.Weather")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft Corp. 2010")> 
+<Assembly: AssemblyCopyright("© Dynamensions")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: AssemblyCulture("")> 
 

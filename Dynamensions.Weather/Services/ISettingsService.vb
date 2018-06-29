@@ -4,11 +4,7 @@ Public Interface ISettingsService
     Function ResetDatabaseAsync() As Task
     Function RefreshStationsAsync() As Task
 
+    Function GetSelectedWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource))
+    Function SetSelectedWeatherSourcesAsync(selectedWeatherSources As IEnumerable(Of WeatherSource)) As Task
 
-    Function GetWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource))
-    Function SaveWeatherSourcesAsync(weatherSources As IEnumerable(Of WeatherSource)) As Task
-
-    Function GetStationsAsync() As Task(Of Location)
-    Function LoadLocationsAsync() As Task(Of IEnumerable(Of String))
-    'Function SaveZipCodesAsync(zipCodes As IEnumerable(Of String)) As Task
 End Interface

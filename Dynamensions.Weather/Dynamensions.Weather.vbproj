@@ -165,6 +165,9 @@
     <Compile Include="ViewModels\_ObservableObject.vb" />
     <Compile Include="ViewModels\_ViewModelBase.vb" />
     <Compile Include="ViewModels\WeatherSourcesViewModel.vb" />
+    <Compile Include="Views\AddWeatherSourceView.xaml.vb">
+      <DependentUpon>AddWeatherSourceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.vb">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Views\AddWeatherSourceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

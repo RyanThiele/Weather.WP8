@@ -6,7 +6,7 @@ Imports System.Data.Linq.Mapping
 Imports System.ComponentModel
 Imports System.Collections.ObjectModel
 Imports System.Linq
-
+Imports System.IO.IsolatedStorage
 
 <Table>
 Public Class Test
@@ -16,13 +16,29 @@ End Class
 Public Class SettingsService
     Implements ISettingsService
 
+
     Private ReadOnly _messageBus As IMessageBus
     Private Const RESET_STATUS As String = "Resetting Data. This could take a while depending on your phone speed."
     Private Const METAR_STATIONS_ADDRESS As String = "https://www.aviationweather.gov/static/adds/metars/stations.txt"
+    Private _settings As IsolatedStorageSettings = IsolatedStorageSettings.ApplicationSettings
 
+    Private Enum StatusTypes
+        [Global]
+        Stations
+    End Enum
+    Private Event StatusUpdated(status As StatusMessage, statusType As StatusTypes)
 
     Public Sub New(messageBus As IMessageBus)
         _messageBus = messageBus
+
+        AddHandler StatusUpdated, Sub(status, statusType)
+                                      Select Case statusType
+                                          Case StatusTypes.Global
+                                              _messageBus.Publish(status)
+                                          Case StatusTypes.Stations
+                                              _messageBus.Publish(New RefreshStationsStatusMessage(status))
+                                      End Select
+                                  End Sub
     End Sub
 
 #Region "Helpers"
@@ -33,7 +49,7 @@ Public Class SettingsService
         client = Nothing
     End Function
 
-    Private Async Function ParseLocationsAsync() As Task
+    Private Async Function ParseLocationsAsync(statusType As StatusTypes) As Task
         Dim total As Long
         Dim zipCodeData As New List(Of Location)
         Using stream As IO.Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Dynamensions.Weather.ZipCodes.csv")
@@ -56,7 +72,7 @@ Public Class SettingsService
 
                     Await AddLocationAsync(model)
                     total += 1
-                    _messageBus.Publish(New StatusMessage With {.Status = RESET_STATUS, .SubStatus = "Parsing Zip Codes (" & total & ")..."})
+                    RaiseEvent StatusUpdated(New StatusMessage With {.Status = RESET_STATUS, .SubStatus = "Parsing Zip Codes (" & total & ")..."}, statusType)
                 End While
             End Using
         End Using
@@ -91,60 +107,54 @@ Public Class SettingsService
 
 #End Region
 
-
-    Public Async Function LoadLocationsAsync() As Task(Of IEnumerable(Of String)) Implements ISettingsService.LoadLocationsAsync
-
-        ''Return tcs.Task
-    End Function
-
-
-    'Public Function SaveZipCodesAsync(zipCodes As IEnumerable(Of String)) As Task Implements ISettingsService.SaveZipCodesAsync
-    '    Dim tcs As New TaskCompletionSource(Of Boolean)
-
-    '    Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
-    '    settings("ZipCodes") = zipCodes.ToList()
-
-    '    Return tcs.Task
-    'End Function
-
-    Public Function GetWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource)) Implements ISettingsService.GetWeatherSourcesAsync
-        Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherSource))
-
-        Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
-        If settings.Contains("WeatherSources") Then
-            tcs.SetResult(CType(settings("WeatherSources"), IEnumerable(Of WeatherSource)))
-        Else
-            tcs.SetResult(Nothing)
-        End If
-
-        Return tcs.Task
-    End Function
-
-    Public Function SaveWeatherSourcesAsync(weatherSources As IEnumerable(Of WeatherSource)) As Task Implements ISettingsService.SaveWeatherSourcesAsync
-        Dim tcs As New TaskCompletionSource(Of Boolean)
-
-        Dim settings = System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings
-        settings("WeatherSources") = weatherSources.ToList()
-
-        Return tcs.Task
-    End Function
-
-    Public Function GetStationsAsync() As Task(Of Location) Implements ISettingsService.GetStationsAsync
-
-    End Function
-
     Public Async Function ResetDatabaseAsync() As Task Implements ISettingsService.ResetDatabaseAsync
 
         _messageBus.Publish(New StatusMessage With {.Status = RESET_STATUS, .SubStatus = "Resetting Database..."})
         Await DatabaseHelper.MoveReferenceDatabaseAsync("Weather.sdf")
 
         _messageBus.Publish(New StatusMessage With {.Status = RESET_STATUS, .SubStatus = "Parsing Zip Codes..."})
-        Await ParseLocationsAsync()
+        Await ParseLocationsAsync(StatusTypes.Global)
 
     End Function
 
     Public Async Function RefreshStationsAsync() As Task Implements ISettingsService.RefreshStationsAsync
         Dim stationsText As String = Await DownloadStationsAsync()
-        If String.IsNullOrWhiteSpace(stationsText) Then Await ParseLocationsAsync()
+        If String.IsNullOrWhiteSpace(stationsText) Then Await ParseLocationsAsync(StatusTypes.Stations)
+    End Function
+
+    Public Function GetSelectedWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource)) Implements ISettingsService.GetSelectedWeatherSourcesAsync
+        Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherSource))
+        Dim worker As New BackgroundWorker
+        Dim models As IEnumerable(Of WeatherSource) = Nothing
+
+        AddHandler worker.DoWork, Sub()
+                                      If _settings.Contains("SelectedWeatherSources") Then
+                                          models = (CType(_settings("SelectedWeatherSources"), IEnumerable(Of WeatherSource)))
+                                      End If
+                                  End Sub
+
+        AddHandler worker.RunWorkerCompleted, Sub()
+                                                  tcs.SetResult(models)
+                                              End Sub
+
+        worker.RunWorkerAsync()
+        Return tcs.Task
+    End Function
+
+    Public Function SetSelectedWeatherSourcesAsync(selectedWeatherSources As IEnumerable(Of WeatherSource)) As Task Implements ISettingsService.SetSelectedWeatherSourcesAsync
+        Dim tcs As New TaskCompletionSource(Of Object)
+        Dim worker As New BackgroundWorker
+        Dim models As IEnumerable(Of WeatherSource) = Nothing
+
+        AddHandler worker.DoWork, Sub()
+                                      _settings("SelectedWeatherSources") = selectedWeatherSources
+                                  End Sub
+
+        AddHandler worker.RunWorkerCompleted, Sub()
+                                                  tcs.SetResult(Nothing)
+                                              End Sub
+
+        worker.RunWorkerAsync()
+        Return tcs.Task
     End Function
 End Class
