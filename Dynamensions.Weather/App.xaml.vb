@@ -43,12 +43,12 @@ Partial Public Class App
         RegisterServices()
         AddHandler RootFrame.Navigated, AddressOf OnNavigated
 
-        Using db As New DbDataContext(DbDataContext.DBConnectionString)
-            If Not db.DatabaseExists Then db.CreateDatabase()
+        'Using db As New DbDataContext(DbDataContext.DBConnectionString)
+        '    If Not db.DatabaseExists Then db.CreateDatabase()
 
-            'db.Locations.InsertOnSubmit(New Location() With {.ZipCode = 10100, .City = "Test", .StateOrProvince = "Test", .StateOrProvinceAbbreviation = "Test", .County = "Test", .Latitude = 1, .Longitude = 2})
-            'db.SubmitChanges()
-        End Using
+        '    'db.Locations.InsertOnSubmit(New Location() With {.ZipCode = 10100, .City = "Test", .StateOrProvince = "Test", .StateOrProvinceAbbreviation = "Test", .County = "Test", .Latitude = 1, .Longitude = 2})
+        '    'db.SubmitChanges()
+        'End Using
 
 
         'DatabaseHelper.MoveReferenceDatabase("Weather.sdf")
@@ -86,6 +86,7 @@ Partial Public Class App
         builder.RegisterType(Of MessageBus).As(Of IMessageBus).SingleInstance()
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
         builder.RegisterType(Of WeatherService).As(Of IWeatherService)()
+        builder.RegisterType(Of Services.GeolocationService).As(Of Services.IGeocodeService)()
 
         ' ViewModels
         builder.RegisterType(GetType(MainViewModel))

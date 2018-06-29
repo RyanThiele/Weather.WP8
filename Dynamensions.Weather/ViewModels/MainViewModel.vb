@@ -6,6 +6,7 @@
     Private _navigationService As INavigationService
     Private _settingsService As ISettingsService
     Private ReadOnly _weatherService As IWeatherService
+    Private ReadOnly _geocodeService As Services.IGeocodeService
 
 #Region "Constructors"
 
@@ -13,12 +14,13 @@
 
     End Sub
 
-    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As IWeatherService)
+    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As IWeatherService, geocodeService As Services.IGeocodeService)
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
         _settingsService = settingsService
         _weatherService = weatherService
+        _geocodeService = geocodeService
 
         _messageBus.Subscribe(Of StatusMessage)(Sub(message)
                                                     Status = message.Status

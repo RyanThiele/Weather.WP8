@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/search/local/ws/rest/v1">
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Copyright" type="xsd:string" />
+        <xsd:element name="BrandLogoUri" type="xsd:string" />
+        <xsd:element name="StatusCode" type="xsd:unsignedByte" />
+        <xsd:element name="StatusDescription" type="xsd:string" />
+        <xsd:element name="AuthenticationResultCode" type="xsd:string" />
+        <xsd:element name="TraceId" type="xsd:string" />
+        <xsd:element name="ResourceSets">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ResourceSet">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="EstimatedTotal" type="xsd:unsignedByte" />
+                    <xsd:element name="Resources">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="Location">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="Name" type="xsd:string" />
+                                <xsd:element name="Point">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="Latitude" type="xsd:decimal" />
+                                      <xsd:element name="Longitude" type="xsd:decimal" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="BoundingBox">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="SouthLatitude" type="xsd:decimal" />
+                                      <xsd:element name="WestLongitude" type="xsd:decimal" />
+                                      <xsd:element name="NorthLatitude" type="xsd:decimal" />
+                                      <xsd:element name="EastLongitude" type="xsd:decimal" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="EntityType" type="xsd:string" />
+                                <xsd:element name="Address">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="AdminDistrict" type="xsd:string" />
+                                      <xsd:element name="AdminDistrict2" type="xsd:string" />
+                                      <xsd:element name="CountryRegion" type="xsd:string" />
+                                      <xsd:element name="FormattedAddress" type="xsd:string" />
+                                      <xsd:element name="Locality" type="xsd:string" />
+                                      <xsd:element name="PostalCode" type="xsd:unsignedShort" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="Confidence" type="xsd:string" />
+                                <xsd:element name="MatchCode" type="xsd:string" />
+                                <xsd:element name="GeocodePoint">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="Latitude" type="xsd:decimal" />
+                                      <xsd:element name="Longitude" type="xsd:decimal" />
+                                      <xsd:element name="CalculationMethod" type="xsd:string" />
+                                      <xsd:element name="UsageType" type="xsd:string" />
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

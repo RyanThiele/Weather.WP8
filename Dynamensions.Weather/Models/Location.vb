@@ -1,35 +1,80 @@
-﻿Imports System.Text
-Imports System.Data.Linq.Mapping
+﻿Imports System.Xml.Linq
+Imports <xmlns:ns="http://schemas.microsoft.com/search/local/ws/rest/v1">
 
-<Table>
-Public Class Location
-    <Column(IsPrimaryKey:=True, CanBeNull:=False, AutoSync:=AutoSync.OnInsert, DbType:="nvarchar(20) NOT NULL")> Public Property ZipCode As String
-    <Column(DbType:="nvarchar(100) NOT NULL")> Public Property City As String
-    <Column(DbType:="nvarchar(100) NOT NULL")> Public Property StateOrProvince As String
-    <Column(DbType:="nvarchar(5) NOT NULL")> Public Property StateOrProvinceAbbreviation As String
-    <Column(DbType:="nvarchar(100) NOT NULL")> Public Property County As String
-    <Column(DbType:="decimal(5,2) NOT NULL")> Public Property Latitude As Decimal
-    <Column(DbType:="decimal(5,2) NOT NULL")> Public Property Longitude As Decimal
+Namespace Models
 
-    Public ReadOnly Property DisplayString As String
+    Public Class Location
 
-        Get
-            Dim sb As New StringBuilder
-            If Not String.IsNullOrWhiteSpace(City) Then sb.Append(City)
-            If Not String.IsNullOrWhiteSpace(StateOrProvinceAbbreviation) Then
-                If Not String.IsNullOrWhiteSpace(City) Then sb.Append(", ")
-                sb.Append(StateOrProvinceAbbreviation)
-            End If
+        Public Property Name As String
 
-            If Not String.IsNullOrWhiteSpace(ZipCode) Then
-                Dim isEmpty As Boolean = String.IsNullOrWhiteSpace(sb.ToString())
-                If Not isEmpty Then sb.Append(" (")
-                sb.Append(ZipCode)
-                If Not isEmpty Then sb.Append(")")
-            End If
+        Private _address As New Address
+        Public ReadOnly Property Address() As Address
+            Get
+                Return _address
+            End Get
+        End Property
 
-            Return sb.ToString()
-        End Get
-    End Property
+        Private _boundingBox As New LocationBoundingBox
+        Public ReadOnly Property BoundingBox() As LocationBoundingBox
+            Get
+                Return _boundingBox
+            End Get
+        End Property
 
-End Class
+        Private _point As New LocationPoint
+        Public ReadOnly Property Point() As LocationPoint
+            Get
+                Return _point
+            End Get
+        End Property
+
+    End Class
+
+
+
+    'Public Class BoundingBox
+
+
+    '    Private _southLatitude As Decimal
+    '    Public ReadOnly Property SouthLatitude() As Decimal
+    '        Get
+    '            Return _southLatitude
+    '        End Get
+    '    End Property
+
+    '    Private _westLongitude As Decimal
+    '    Public ReadOnly Property WestLongitude() As Decimal
+    '        Get
+    '            Return _westLongitude
+    '        End Get
+    '    End Property
+
+    '    Private _northLatitude As Decimal
+    '    Public ReadOnly Property NorthLatitude() As Decimal
+    '        Get
+    '            Return _northLatitude
+    '        End Get
+    '    End Property
+
+    '    Private _eastLongitude As Decimal
+    '    Public ReadOnly Property EastLongitude() As Decimal
+    '        Get
+    '            Return _eastLongitude
+    '        End Get
+    '    End Property
+
+    '    Public Sub New(southlatitude As Decimal, westLongitude As Decimal, northLatitude As Decimal, eastLongitude As Decimal)
+    '        _southLatitude = southlatitude
+    '        _westLongitude = westLongitude
+    '        _northLatitude = northLatitude
+    '        _eastLongitude = eastLongitude
+    '    End Sub
+
+    '    Public Sub New(boundingBoxXml As XElement)
+    '        _southLatitude = boundingBoxXml.<SouthLatitude>.Value.ToDecimal()
+    '        _westLongitude = boundingBoxXml.<WestLongitude>.Value.ToDecimal()
+    '        _northLatitude = boundingBoxXml.<NorthLatitude>.Value.ToDecimal()
+    '        _eastLongitude = boundingBoxXml.<EastLongitude>.Value.ToDecimal()
+    '    End Sub
+    'End Class
+End Namespace

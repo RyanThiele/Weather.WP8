@@ -16,7 +16,7 @@ Public Class DbDataContext
     End Sub
 
     ' Specify tables.
-    Public Locations As Table(Of Location)
+    'Public Locations As Table(Of Location)
 
     Private Delegate Sub SubmitChangesDelegate()
     Public Function SubmitChangesAsync() As Task

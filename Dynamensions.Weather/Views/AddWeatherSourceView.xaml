@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Dynamensions.Weather"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -29,8 +30,9 @@
         <!--ContentPanel - place additional content here-->
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBlock Text="Enter zip code:" />
-            <TextBox InputScope="PostalCode" />
-            <Button HorizontalAlignment="Right">Search</Button>
+            <TextBox InputScope="PostalCode" 
+                     Text="{Binding PostalCode, Mode=TwoWay}" local:BindingUtility.UpdateSourceOnChange="True" />
+            <Button HorizontalAlignment="Right" Command="{Binding SearchCommand}">Search</Button>
 
             <TextBlock Text="{Binding Status}" MinHeight="0" />
             <ProgressBar IsIndeterminate="True" Height="40" Margin="0"/>

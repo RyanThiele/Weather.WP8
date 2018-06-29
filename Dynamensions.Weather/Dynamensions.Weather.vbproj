@@ -135,6 +135,7 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindingUtility.vb" />
     <Compile Include="Buses\Busses.vb" />
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
@@ -144,7 +145,10 @@
     <Compile Include="Messages\RefreshStationsStatusMessage.vb" />
     <Compile Include="Messages\RemoveWeatherSourceMessage.vb" />
     <Compile Include="Messages\StatusMessage.vb" />
+    <Compile Include="Models\Address.vb" />
     <Compile Include="Models\DataResult.vb" />
+    <Compile Include="Models\LocationPoint.vb" />
+    <Compile Include="Models\LocationBoundingBox.vb" />
     <Compile Include="Models\Location.vb" />
     <Compile Include="Models\WeatherSource.vb" />
     <Compile Include="RelayCommandWithParameter.vb" />
@@ -152,7 +156,9 @@
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Services\DataContext.vb" />
     <Compile Include="Services\DialogService.vb" />
+    <Compile Include="Services\GeolocationService.vb" />
     <Compile Include="Services\IDialogService.vb" />
+    <Compile Include="Services\IGeocodeService.vb" />
     <Compile Include="Services\INavigationService.vb" />
     <Compile Include="Services\ISettingsService.vb" />
     <Compile Include="Services\IWeatherService.vb" />
@@ -198,6 +204,9 @@
     <EmbeddedResource Include="Resources\ZipCodes.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="SampleResponses\BingLocationResponse.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SampleResponses\ZipCodeList.xsd">
       <SubType>Designer</SubType>
     </None>
