@@ -1,0 +1,4 @@
+<Weather:AddWeatherSourceViewModel xmlns:Weather="clr-namespace:Dynamensions.Weather" ApplicationTitle="Aenean mauris sed maecenas dis" 
+                                   IsSearching="True" 
+                                   PostalCode="Vestibulum adipiscing cras class nam" 
+                                   Status="Duis parturient" Title="Aliquam integer curae"/>

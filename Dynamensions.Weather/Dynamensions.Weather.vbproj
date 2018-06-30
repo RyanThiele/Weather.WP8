@@ -139,6 +139,7 @@
     <Compile Include="Buses\Busses.vb" />
     <Compile Include="Buses\IMessageBus.vb" />
     <Compile Include="Buses\MessageBus.vb" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
     <Compile Include="DatabaseHelper.vb" />
     <Compile Include="Extensions.vb" />
@@ -222,6 +223,9 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <DesignData Include="SampleData\AddWeatherSourceViewModelSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DesignData>
     <DesignData Include="SampleData\MainViewModelSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
     </DesignData>

@@ -2,24 +2,26 @@
 
 Namespace Converters
 
-    Public Class CountToVisibilityConverter
+    Public Class BooleanToVisibilityConverter
         Implements IValueConverter
 
         Public Function Convert(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IValueConverter.Convert
             If value Is Nothing Then Return False
 
-            Dim count As Integer = 0
             Dim isInverted As Boolean = False
+            Dim isVisible As Boolean = False
 
-            Integer.TryParse(value, count)
             Boolean.TryParse(parameter, isInverted)
+            Boolean.TryParse(value, isVisible)
 
-            If isInverted Then
-                Return If(count = 0, Visibility.Collapsed, Visibility.Visible)
+            ' if inverted flip the flag.
+            If isInverted Then isVisible = Not isVisible
+
+            If isVisible Then
+                Return Visibility.Visible
             Else
-                Return If(count = 0, Visibility.Visible, Visibility.Collapsed)
+                Return Visibility.Collapsed
             End If
-
         End Function
 
         Public Function ConvertBack(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IValueConverter.ConvertBack
