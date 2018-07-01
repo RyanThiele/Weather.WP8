@@ -87,7 +87,7 @@ Public Class AddWeatherSourceViewModel
             Status = "Searching for " & PostalCode & "..."
 
             _searchCancelTokenSource = New CancellationTokenSource
-            Dim location As Models.Location = Await _geocodeService.GetLocationByPostalCodeAsync(PostalCode)
+            Dim location As Models.Location = Await _geocodeService.GetLocationByPostalCodeAsync(PostalCode, _searchCancelTokenSource.Token)
             If _searchCancelTokenSource.IsCancellationRequested Then
                 Status = "User canceled the search."
                 Return

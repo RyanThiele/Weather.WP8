@@ -1,6 +1,7 @@
 ﻿Imports System.Net
 Imports System.Xml.Linq
 Imports System.IO
+Imports System.Threading
 Imports <xmlns:ns="http://schemas.microsoft.com/search/local/ws/rest/v1">
 Imports Dynamensions.Weather.Models
 
@@ -13,10 +14,10 @@ Namespace Services
         Private ReadOnly _locationQuery As String = "http://dev.virtualearth.net/REST/v1/Locations?CountryRegion={CountryRegion}&postalCode={PostalCode}&o=xml&key={Key}"
         Private ReadOnly _bingKey As String = "RoZKgybYllx3ZynXdmRT~4OZw7NQxOQD12Px6ABtAQw~Aos2iG9os1WvpjQc3tStdn_EC51Htk55kTfH0pGQnMPTDx0RHPn3NXfanttIByG8"
 
-
-        Public Async Function GetLocationByPostalCodeAsync(postalCode As String) As Task(Of Location) Implements IGeocodeService.GetLocationByPostalCodeAsync
+        Public Async Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Location) Implements IGeocodeService.GetLocationByPostalCodeAsync
             Dim queryString As String = _locationQuery.Replace("{CountryRegion}", "US").Replace("{PostalCode}", postalCode).Replace("{Key}", _bingKey)
             Dim request As HttpWebRequest = HttpWebRequest.Create(queryString)
+            token.Register(AddressOf request.Abort)
             Dim response As HttpWebResponse = Await request.GetResponseAsync()
             Dim location As Location = Nothing
 
