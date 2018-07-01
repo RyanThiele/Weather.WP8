@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xsd:element name="dwml">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="head">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="product">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="title" type="xsd:string" />
+                    <xsd:element name="field" type="xsd:string" />
+                    <xsd:element name="category" type="xsd:string" />
+                    <xsd:element name="creation-date">
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:extension base="xsd:dateTime">
+                            <xsd:attribute name="refresh-frequency" type="xsd:duration" use="required" />
+                          </xsd:extension>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="srsName" type="xsd:string" use="required" />
+                  <xsd:attribute name="concise-name" type="xsd:string" use="required" />
+                  <xsd:attribute name="operational-mode" type="xsd:string" use="required" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="source">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="more-information" type="xsd:string" />
+                    <xsd:element name="production-center">
+                      <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                          <xsd:element name="sub-center" type="xsd:string" />
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="disclaimer" type="xsd:string" />
+                    <xsd:element name="credit" type="xsd:string" />
+                    <xsd:element name="credit-logo" type="xsd:string" />
+                    <xsd:element name="feedback" type="xsd:string" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="location">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="location-key" type="xsd:string" />
+                    <xsd:element name="point">
+                      <xsd:complexType>
+                        <xsd:attribute name="latitude" type="xsd:decimal" use="required" />
+                        <xsd:attribute name="longitude" type="xsd:decimal" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="moreWeatherInformation">
+                <xsd:complexType>
+                  <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                      <xsd:attribute name="applicable-location" type="xsd:string" use="required" />
+                    </xsd:extension>
+                  </xsd:simpleContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element maxOccurs="unbounded" name="time-layout">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:choice maxOccurs="unbounded">
+                      <xsd:element name="layout-key" type="xsd:string" />
+                      <xsd:element name="start-valid-time" type="xsd:dateTime" />
+                      <xsd:element name="end-valid-time" type="xsd:dateTime" />
+                    </xsd:choice>
+                  </xsd:sequence>
+                  <xsd:attribute name="time-coordinate" type="xsd:string" use="required" />
+                  <xsd:attribute name="summarization" type="xsd:string" use="required" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="parameters">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" name="temperature">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string" />
+                          <xsd:element maxOccurs="unbounded" name="value" nillable="true" type="xsd:string" />
+                        </xsd:sequence>
+                        <xsd:attribute name="type" type="xsd:string" use="required" />
+                        <xsd:attribute name="units" type="xsd:string" use="required" />
+                        <xsd:attribute name="time-layout" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="probability-of-precipitation">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string" />
+                          <xsd:element maxOccurs="unbounded" name="value" nillable="true" type="xsd:string" />
+                        </xsd:sequence>
+                        <xsd:attribute name="type" type="xsd:string" use="required" />
+                        <xsd:attribute name="units" type="xsd:string" use="required" />
+                        <xsd:attribute name="time-layout" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="weather">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string" />
+                          <xsd:element maxOccurs="unbounded" name="weather-conditions">
+                            <xsd:complexType>
+                              <xsd:sequence minOccurs="0">
+                                <xsd:element maxOccurs="unbounded" name="value">
+                                  <xsd:complexType>
+                                    <xsd:attribute name="coverage" type="xsd:string" use="required" />
+                                    <xsd:attribute name="intensity" type="xsd:string" use="required" />
+                                    <xsd:attribute name="weather-type" type="xsd:string" use="required" />
+                                    <xsd:attribute name="qualifier" type="xsd:string" use="required" />
+                                    <xsd:attribute name="additive" type="xsd:string" use="optional" />
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                              <xsd:attribute name="weather-summary" type="xsd:string" use="required" />
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="time-layout" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="conditions-icon">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string" />
+                          <xsd:element maxOccurs="unbounded" name="icon-link" type="xsd:string" />
+                        </xsd:sequence>
+                        <xsd:attribute name="type" type="xsd:string" use="required" />
+                        <xsd:attribute name="time-layout" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="hazards">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string" />
+                          <xsd:element name="hazard-conditions">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="hazard">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="hazardTextURL" type="xsd:string" />
+                                    </xsd:sequence>
+                                    <xsd:attribute name="hazardCode" type="xsd:string" use="required" />
+                                    <xsd:attribute name="phenomena" type="xsd:string" use="required" />
+                                    <xsd:attribute name="significance" type="xsd:string" use="required" />
+                                    <xsd:attribute name="hazardType" type="xsd:string" use="required" />
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="time-layout" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="applicable-location" type="xsd:string" use="required" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="version" type="xsd:decimal" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

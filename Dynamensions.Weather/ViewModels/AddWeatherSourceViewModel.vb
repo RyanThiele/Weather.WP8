@@ -7,6 +7,7 @@ Public Class AddWeatherSourceViewModel
     Private ReadOnly _dialogService As IDialogService
     Private ReadOnly _navigationService As INavigationService
     Private ReadOnly _geocodeService As Services.IGeocodeService
+    Private ReadOnly _weatherService As Services.IWeatherService
     Private _searchCancelTokenSource As CancellationTokenSource
 
 #Region "Constructors"
@@ -15,13 +16,17 @@ Public Class AddWeatherSourceViewModel
 
     End Sub
 
-    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, geocodeService As Services.IGeocodeService)
+    Public Sub New(messageBus As IMessageBus,
+                   dialogService As IDialogService,
+                   navigationService As INavigationService,
+                   geocodeService As Services.IGeocodeService,
+                   weatherService As Services.IWeatherService)
+
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
         _geocodeService = geocodeService
-
-        PostalCode = "46845"
+        _weatherService = weatherService
     End Sub
 
 #End Region
@@ -65,6 +70,7 @@ Public Class AddWeatherSourceViewModel
 #Region "Commands"
 
 #Region "SearchCommand"
+
     Dim _SearchCommand As ICommand
     Public ReadOnly Property SearchCommand As ICommand
         Get
@@ -84,19 +90,22 @@ Public Class AddWeatherSourceViewModel
         IsSearching = True
 
         Try
+            ' Find the location
             Status = "Searching for " & PostalCode & "..."
-
             _searchCancelTokenSource = New CancellationTokenSource
             Dim location As Models.Location = Await _geocodeService.GetLocationByPostalCodeAsync(PostalCode, _searchCancelTokenSource.Token)
-            If _searchCancelTokenSource.IsCancellationRequested Then
-                Status = "User canceled the search."
-                Return
-            End If
 
+            ' see if the user canceled the process.
+            CheckSearchTokenStatus()
+
+            ' Do we have a location?
             If location Is Nothing Then
                 _dialogService.ShowOkDialog("No Location Found", "There was no location found at the zip code: " & PostalCode & "." & Environment.NewLine & "Please try again.")
                 Return
             End If
+
+            ' Get the weather for the zip code.
+            Dim x = _weatherService.
 
             Status = "Search Complete."
         Catch ex As Exception
@@ -137,9 +146,15 @@ Public Class AddWeatherSourceViewModel
 #End Region
 
 #Region "Methods"
+
+    Private Function CheckSearchTokenStatus() As Boolean
+        If _searchCancelTokenSource.IsCancellationRequested Then
+            Status = "User canceled the search."
+        End If
+
+        Return _searchCancelTokenSource.IsCancellationRequested
+    End Function
+
 #End Region
-
-
-
 
 End Class

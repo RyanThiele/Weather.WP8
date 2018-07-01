@@ -147,11 +147,16 @@
     <Compile Include="Messages\RemoveWeatherSourceMessage.vb" />
     <Compile Include="Messages\StatusMessage.vb" />
     <Compile Include="Models\Address.vb" />
-    <Compile Include="Models\DataResult.vb" />
     <Compile Include="Models\LocationPoint.vb" />
     <Compile Include="Models\LocationBoundingBox.vb" />
     <Compile Include="Models\Location.vb" />
-    <Compile Include="Models\WeatherSource.vb" />
+    <Compile Include="Models\Noaa\Data.vb" />
+    <Compile Include="Models\Noaa\DWML.vb" />
+    <Compile Include="Models\Noaa\Head.vb" />
+    <Compile Include="Models\Noaa\Product.vb" />
+    <Compile Include="Models\Noaa\Enums.vb" />
+    <Compile Include="Models\Noaa\Source.vb" />
+    <Compile Include="Models\Noaa\WeatherByDay.vb" />
     <Compile Include="RelayCommandWithParameter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="RelayCommand.vb" />
@@ -197,6 +202,9 @@
     <Content Include="Weather.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="SampleResponses\GenByDay.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\AppManifest.xml" />
     <None Include="My Project\WMAppManifest.xml">
       <SubType>Designer</SubType>
