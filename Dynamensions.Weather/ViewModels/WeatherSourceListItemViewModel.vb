@@ -3,7 +3,7 @@
 
     Private ReadOnly _dialogService As IDialogService
     Private ReadOnly _messageBus As IMessageBus
-    Private ReadOnly _model As WeatherSource
+    'Private ReadOnly _model As WeatherSource
 
 #Region "Constructors"
 
@@ -11,12 +11,11 @@
 
     End Sub
 
-    Public Sub New(dialogService As IDialogService, messageBus As IMessageBus, model As WeatherSource)
+    Public Sub New(dialogService As IDialogService, messageBus As IMessageBus)
         _dialogService = dialogService
         _messageBus = messageBus
-        _model = model
 
-        ZipCode = model.ZipCode
+        'ZipCode = model.ZipCode
 
         DisplayString = ZipCode & " (" & WeatherStationId & ")"
     End Sub
@@ -123,7 +122,7 @@
 
     Private Sub ExecuteRemove()
         If _dialogService.ShowYesDialog("Confirm Delete", "Are you sure you want to delete " & ZipCode & "? The action cannot be undone.") Then
-            _messageBus.Publish(New RemoveWeatherSourceMessage With {.WeatherSource = _model})
+            '_messageBus.Publish(New RemoveWeatherSourceMessage With {.WeatherSource = _model})
         End If
     End Sub
 

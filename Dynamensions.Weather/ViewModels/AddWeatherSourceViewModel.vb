@@ -105,7 +105,7 @@ Public Class AddWeatherSourceViewModel
             End If
 
             ' Get the weather for the zip code.
-            Dim x = _weatherService.
+            Dim x = _weatherService.GetWeatherByDay(New Point(location.Point.Latitude, location.Point.Longitude), Date.Now, 1, Services.NoaaWeatherFormats.Every24Hours, _searchCancelTokenSource.Token)
 
             Status = "Search Complete."
         Catch ex As Exception

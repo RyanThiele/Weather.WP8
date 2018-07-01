@@ -79,35 +79,35 @@ Public Class SettingsService
     '    End Using
     'End Function
 
-    Private Function AddLocationAsync(location As Location) As Task
+    'Private Function AddLocationAsync(location As Location) As Task
 
 
 
-        'Dim tcs As New TaskCompletionSource(Of Object)
-        'Dim worker As New BackgroundWorker
-        'AddHandler worker.DoWork, Sub()
-        '                              Using db As New DbDataContext(DbDataContext.DBConnectionString)
-        '                                  Dim existingLocation As Location = db.Locations.SingleOrDefault(Function(m) m.ZipCode.Equals(location.ZipCode))
-        '                                  If existingLocation IsNot Nothing Then
-        '                                      existingLocation.City = location.City
-        '                                      existingLocation.StateOrProvince = location.StateOrProvince
-        '                                      existingLocation.Latitude = location.Latitude
-        '                                      existingLocation.Longitude = location.Longitude
-        '                                  Else
-        '                                      db.Locations.InsertOnSubmit(location)
-        '                                  End If
+    'Dim tcs As New TaskCompletionSource(Of Object)
+    'Dim worker As New BackgroundWorker
+    'AddHandler worker.DoWork, Sub()
+    '                              Using db As New DbDataContext(DbDataContext.DBConnectionString)
+    '                                  Dim existingLocation As Location = db.Locations.SingleOrDefault(Function(m) m.ZipCode.Equals(location.ZipCode))
+    '                                  If existingLocation IsNot Nothing Then
+    '                                      existingLocation.City = location.City
+    '                                      existingLocation.StateOrProvince = location.StateOrProvince
+    '                                      existingLocation.Latitude = location.Latitude
+    '                                      existingLocation.Longitude = location.Longitude
+    '                                  Else
+    '                                      db.Locations.InsertOnSubmit(location)
+    '                                  End If
 
-        '                                  db.SubmitChanges()
-        '                              End Using
-        '                          End Sub
+    '                                  db.SubmitChanges()
+    '                              End Using
+    '                          End Sub
 
-        ''AddLocation(location)
-        'AddHandler worker.RunWorkerCompleted, Sub()
-        '                                          tcs.SetResult(Nothing)
-        '                                      End Sub
-        'worker.RunWorkerAsync()
-        'Return tcs.Task
-    End Function
+    ''AddLocation(location)
+    'AddHandler worker.RunWorkerCompleted, Sub()
+    '                                          tcs.SetResult(Nothing)
+    '                                      End Sub
+    'worker.RunWorkerAsync()
+    'Return tcs.Task
+    'End Function
 
 #End Region
 
@@ -126,39 +126,39 @@ Public Class SettingsService
         'If String.IsNullOrWhiteSpace(stationsText) Then Await ParseLocationsAsync(StatusTypes.Stations)
     End Function
 
-    Public Function GetSelectedWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource)) Implements ISettingsService.GetSelectedWeatherSourcesAsync
-        Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherSource))
-        Dim worker As New BackgroundWorker
-        Dim models As IEnumerable(Of WeatherSource) = Nothing
+    'Public Function GetSelectedWeatherSourcesAsync() As Task(Of IEnumerable(Of WeatherSource)) Implements ISettingsService.GetSelectedWeatherSourcesAsync
+    'Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherSource))
+    'Dim worker As New BackgroundWorker
+    'Dim models As IEnumerable(Of WeatherSource) = Nothing
 
-        AddHandler worker.DoWork, Sub()
-                                      If _settings.Contains("SelectedWeatherSources") Then
-                                          models = (CType(_settings("SelectedWeatherSources"), IEnumerable(Of WeatherSource)))
-                                      End If
-                                  End Sub
+    'AddHandler worker.DoWork, Sub()
+    '                              If _settings.Contains("SelectedWeatherSources") Then
+    '                                  models = (CType(_settings("SelectedWeatherSources"), IEnumerable(Of WeatherSource)))
+    '                              End If
+    '                          End Sub
 
-        AddHandler worker.RunWorkerCompleted, Sub()
-                                                  tcs.SetResult(models)
-                                              End Sub
+    'AddHandler worker.RunWorkerCompleted, Sub()
+    '                                          tcs.SetResult(models)
+    '                                      End Sub
 
-        worker.RunWorkerAsync()
-        Return tcs.Task
-    End Function
+    'worker.RunWorkerAsync()
+    'Return tcs.Task
+    'End Function
 
-    Public Function SetSelectedWeatherSourcesAsync(selectedWeatherSources As IEnumerable(Of WeatherSource)) As Task Implements ISettingsService.SetSelectedWeatherSourcesAsync
-        Dim tcs As New TaskCompletionSource(Of Object)
-        Dim worker As New BackgroundWorker
-        Dim models As IEnumerable(Of WeatherSource) = Nothing
+    'Public Function SetSelectedWeatherSourcesAsync(selectedWeatherSources As IEnumerable(Of WeatherSource)) As Task Implements ISettingsService.SetSelectedWeatherSourcesAsync
+    'Dim tcs As New TaskCompletionSource(Of Object)
+    'Dim worker As New BackgroundWorker
+    'Dim models As IEnumerable(Of WeatherSource) = Nothing
 
-        AddHandler worker.DoWork, Sub()
-                                      _settings("SelectedWeatherSources") = selectedWeatherSources
-                                  End Sub
+    'AddHandler worker.DoWork, Sub()
+    '                              _settings("SelectedWeatherSources") = selectedWeatherSources
+    '                          End Sub
 
-        AddHandler worker.RunWorkerCompleted, Sub()
-                                                  tcs.SetResult(Nothing)
-                                              End Sub
+    'AddHandler worker.RunWorkerCompleted, Sub()
+    '                                          tcs.SetResult(Nothing)
+    '                                      End Sub
 
-        worker.RunWorkerAsync()
-        Return tcs.Task
-    End Function
+    'worker.RunWorkerAsync()
+    'Return tcs.Task
+    'End Function
 End Class

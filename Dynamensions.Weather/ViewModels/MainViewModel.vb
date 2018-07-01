@@ -5,7 +5,7 @@
     Private _dialogService As IDialogService
     Private _navigationService As INavigationService
     Private _settingsService As ISettingsService
-    Private ReadOnly _weatherService As IWeatherService
+    Private ReadOnly _weatherService As Services.IWeatherService
     Private ReadOnly _geocodeService As Services.IGeocodeService
 
 #Region "Constructors"
@@ -14,7 +14,7 @@
 
     End Sub
 
-    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As IWeatherService, geocodeService As Services.IGeocodeService)
+    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As Services.IWeatherService, geocodeService As Services.IGeocodeService)
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService

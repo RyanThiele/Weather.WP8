@@ -85,7 +85,7 @@ Partial Public Class App
         builder.RegisterType(Of DialogService).As(Of IDialogService)()
         builder.RegisterType(Of MessageBus).As(Of IMessageBus).SingleInstance()
         builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
-        builder.RegisterType(Of WeatherService).As(Of IWeatherService)()
+        builder.RegisterType(Of Services.WeatherService).As(Of Services.IWeatherService)()
         builder.RegisterType(Of Services.GeolocationService).As(Of Services.IGeocodeService)()
 
         ' ViewModels

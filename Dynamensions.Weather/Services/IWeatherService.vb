@@ -9,9 +9,7 @@ Namespace Services
 
     Public Interface IWeatherService
 
-        Function GetClosestWeatherSourceByZipCodeAsync(zipcode As String) As Task(Of WeatherSource)
-
-        Function GetWeatherByDay(latitude As Decimal, longitude As Decimal, startDate As DateTime, numberOfDays As Integer, format As NoaaWeatherFormats, token As CancellationToken)
+        Function GetWeatherByDay(point As Point, startDate As DateTime, numberOfDays As Integer, format As NoaaWeatherFormats, token As CancellationToken)
 
     End Interface
 
