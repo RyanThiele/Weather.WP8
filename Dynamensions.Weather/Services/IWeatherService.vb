@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports Dynamensions.Weather.Models
 
 Namespace Services
 
@@ -9,7 +10,11 @@ Namespace Services
 
     Public Interface IWeatherService
 
-        Function GetWeatherByDay(point As Point, startDate As DateTime, numberOfDays As Integer, format As NoaaWeatherFormats, token As CancellationToken)
+        Function GetStationByPostalCodeAsync(postalcode As String, token As CancellationToken) As Task(Of Entities.Station)
+
+        Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Models.Location)
+        'Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Location)
+        'Function GetWeatherByDayAsync(postalCode As String, startDate As DateTime, numberOfDays As Integer, format As NoaaWeatherFormats, token As CancellationToken) As Noaa.WeatherByDay
 
     End Interface
 

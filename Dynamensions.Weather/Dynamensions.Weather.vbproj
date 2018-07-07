@@ -141,14 +141,15 @@
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
-    <Compile Include="DatabaseHelper.vb" />
+    <Compile Include="Entities\DatabaseHelper.vb" />
+    <Compile Include="Entities\Location.vb" />
+    <Compile Include="Entities\PostalCodeStation.vb" />
+    <Compile Include="Entities\Station.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="Messages\RefreshStationsStatusMessage.vb" />
     <Compile Include="Messages\RemoveWeatherSourceMessage.vb" />
+    <Compile Include="Messages\ResetDatabaseMessage.vb" />
     <Compile Include="Messages\StatusMessage.vb" />
     <Compile Include="Models\Address.vb" />
-    <Compile Include="Models\LocationPoint.vb" />
-    <Compile Include="Models\LocationBoundingBox.vb" />
     <Compile Include="Models\Location.vb" />
     <Compile Include="Models\Noaa\Data.vb" />
     <Compile Include="Models\Noaa\DWML.vb" />
@@ -157,14 +158,13 @@
     <Compile Include="Models\Noaa\Enums.vb" />
     <Compile Include="Models\Noaa\Source.vb" />
     <Compile Include="Models\Noaa\WeatherByDay.vb" />
+    <Compile Include="Models\Station.vb" />
     <Compile Include="RelayCommandWithParameter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="RelayCommand.vb" />
-    <Compile Include="Services\DataContext.vb" />
+    <Compile Include="Entities\DataContext.vb" />
     <Compile Include="Services\DialogService.vb" />
-    <Compile Include="Services\GeolocationService.vb" />
     <Compile Include="Services\IDialogService.vb" />
-    <Compile Include="Services\IGeocodeService.vb" />
     <Compile Include="Services\INavigationService.vb" />
     <Compile Include="Services\ISettingsService.vb" />
     <Compile Include="Services\IWeatherService.vb" />
@@ -173,6 +173,7 @@
     <Compile Include="Services\WeatherService.vb" />
     <Compile Include="ViewModels\AddWeatherSourceViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
+    <Compile Include="ViewModels\SettingsViewModel.vb" />
     <Compile Include="ViewModels\WeatherSourceListItemViewModel.vb" />
     <Compile Include="ViewModels\_ObservableObject.vb" />
     <Compile Include="ViewModels\_ViewModelBase.vb" />
@@ -182,6 +183,9 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.vb">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.vb">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -197,11 +201,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Weather.sdf">
+    <Content Include="Images\Settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Weather.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="SampleResponses\NOAAZipCodeToPoints.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SampleResponses\GenByDay.xsd">
       <SubType>Designer</SubType>
     </None>

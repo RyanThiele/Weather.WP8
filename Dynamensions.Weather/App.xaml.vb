@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Autofac
+Imports Dynamensions.Weather.Services
 
 Partial Public Class App
     Inherits Application
@@ -50,8 +51,8 @@ Partial Public Class App
         '    'db.SubmitChanges()
         'End Using
 
-
         'DatabaseHelper.MoveReferenceDatabase("Weather.sdf")
+
     End Sub
 
 #Region "Navigation"
@@ -82,16 +83,15 @@ Partial Public Class App
 
         ' Services
         builder.RegisterType(Of NavigationService).As(Of INavigationService)()
-        builder.RegisterType(Of DialogService).As(Of IDialogService)()
+        builder.RegisterType(Of Services.DialogService).As(Of IDialogService)()
         builder.RegisterType(Of MessageBus).As(Of IMessageBus).SingleInstance()
-        builder.RegisterType(Of SettingsService).As(Of ISettingsService)()
-        builder.RegisterType(Of Services.WeatherService).As(Of Services.IWeatherService)()
-        builder.RegisterType(Of Services.GeolocationService).As(Of Services.IGeocodeService)()
+        builder.RegisterType(Of Services.SettingsService).As(Of ISettingsService)()
+        builder.RegisterType(Of Services.WeatherService).As(Of IWeatherService)()
 
         ' ViewModels
         builder.RegisterType(GetType(MainViewModel))
         builder.RegisterType(GetType(AddWeatherSourceViewModel))
-        'builder.RegisterType(GetType(StartupViewModel))
+        builder.RegisterType(GetType(SettingsViewModel))
         'builder.RegisterType(GetType(ZipCodeListViewModel))
 
         Container = builder.Build()

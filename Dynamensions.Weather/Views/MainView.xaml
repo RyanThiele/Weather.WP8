@@ -12,7 +12,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True" 
     d:DataContext="{d:DesignData /SampleData/MainViewModelSampleData.xaml}">
 
@@ -22,17 +22,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel>
-            <TextBlock Text="{Binding Path=Status}" TextWrapping="Wrap" />
-            <TextBlock Text="{Binding Path=SubStatus}" TextWrapping="Wrap" />
-            <ProgressBar Value="{Binding Path=Progress}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding SettingsCommand}" BorderThickness="0">
+                <Image Source="/Images/settings.png" />
+            </Button>
         </StackPanel>
-        
         <!--Pivot Control-->
         <controls:Pivot Title="{Binding ApplicationTitle}" Grid.Row="1">
            
             <!--Pivot item one-->
-            <controls:PivotItem Header="item1" DataContext="{Binding Path=WeatherSourcesViewModel}" >
+            <controls:PivotItem Header="Weather1" DataContext="{Binding Path=WeatherSourcesViewModel}" >
                 <StackPanel>
                     <TextBlock Text="{Binding Path=Title}" />
                     <Button Command="{Binding Path=AddWeatherSourceCommand}">Add</Button>
@@ -50,8 +49,10 @@
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem Header="item2">
-                <Grid/>
+            <controls:PivotItem Header="Settings">
+                <StackPanel>
+                    <Button Command="{Binding Path=ResetDatabaseCommand}">Reset Database</Button>
+                </StackPanel>
             </controls:PivotItem>
            
         </controls:Pivot>

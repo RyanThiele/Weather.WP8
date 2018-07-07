@@ -1,4 +1,6 @@
-﻿Public Class WeatherSourceListItemViewModel
+﻿Imports Dynamensions.Weather.Services
+
+Public Class WeatherSourceListItemViewModel
     Inherits ViewModelBase
 
     Private ReadOnly _dialogService As IDialogService
@@ -121,7 +123,7 @@
     End Function
 
     Private Sub ExecuteRemove()
-        If _dialogService.ShowYesDialog("Confirm Delete", "Are you sure you want to delete " & ZipCode & "? The action cannot be undone.") Then
+        If _dialogService.ShowYesNoDialog("Confirm Delete", "Are you sure you want to delete " & ZipCode & "? The action cannot be undone.") Then
             '_messageBus.Publish(New RemoveWeatherSourceMessage With {.WeatherSource = _model})
         End If
     End Sub

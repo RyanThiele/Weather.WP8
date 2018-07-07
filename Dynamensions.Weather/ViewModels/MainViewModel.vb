@@ -1,12 +1,13 @@
-﻿Public Class MainViewModel
+﻿Imports Dynamensions.Weather.Services
+
+Public Class MainViewModel
     Inherits ViewModelBase
 
-    Private _messageBus As IMessageBus
-    Private _dialogService As IDialogService
-    Private _navigationService As INavigationService
-    Private _settingsService As ISettingsService
-    Private ReadOnly _weatherService As Services.IWeatherService
-    Private ReadOnly _geocodeService As Services.IGeocodeService
+    Private ReadOnly _messageBus As IMessageBus
+    Private ReadOnly _dialogService As IDialogService
+    Private ReadOnly _navigationService As INavigationService
+    Private ReadOnly _settingsService As ISettingsService
+    Private ReadOnly _weatherService As IWeatherService
 
 #Region "Constructors"
 
@@ -14,13 +15,12 @@
 
     End Sub
 
-    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As Services.IWeatherService, geocodeService As Services.IGeocodeService)
+    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As IWeatherService)
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
         _settingsService = settingsService
         _weatherService = weatherService
-        _geocodeService = geocodeService
 
         _messageBus.Subscribe(Of StatusMessage)(Sub(message)
                                                     Status = message.Status
@@ -70,6 +70,31 @@
 #End Region
 
 #Region "Commands"
+
+#Region "SettingsCommand"
+    Dim _SettingsCommand As ICommand
+    Public ReadOnly Property SettingsCommand As ICommand
+        Get
+            If _SettingsCommand Is Nothing Then
+                _SettingsCommand = New Commands.RelayCommand(AddressOf ExecuteSettings, AddressOf CanExecuteSettings)
+            End If
+
+            Return _SettingsCommand
+        End Get
+    End Property
+
+    Private Function CanExecuteSettings() As Boolean
+        Return True
+    End Function
+
+    Private Sub ExecuteSettings()
+        _
+        _navigationService.NavigateTo(Of SettingsViewModel)()
+    End Sub
+
+#End Region
+
+
 #End Region
 
 #Region "Methods"
@@ -83,7 +108,7 @@
     ''' </remarks>
     Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
         Try
-            Await WeatherSourcesViewModel.InitializeAsync()
+            Dim locations As IEnumerable(Of Models.Location) = Await _settingsService.GetSelectedLocationsAsync
         Catch ex As Exception
             ' TODO: We need to recover here!
             Throw

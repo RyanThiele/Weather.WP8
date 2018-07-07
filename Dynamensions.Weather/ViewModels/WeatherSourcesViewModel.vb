@@ -1,4 +1,6 @@
-﻿Public Class WeatherSourcesViewModel
+﻿Imports Dynamensions.Weather.Services
+
+Public Class WeatherSourcesViewModel
     Inherits ViewModelBase
 
     Private ReadOnly _messageBus As IMessageBus

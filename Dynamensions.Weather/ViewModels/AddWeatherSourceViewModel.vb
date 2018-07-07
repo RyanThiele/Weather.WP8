@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports Dynamensions.Weather.Services
 
 Public Class AddWeatherSourceViewModel
     Inherits ViewModelBase
@@ -6,8 +7,9 @@ Public Class AddWeatherSourceViewModel
     Private ReadOnly _messageBus As IMessageBus
     Private ReadOnly _dialogService As IDialogService
     Private ReadOnly _navigationService As INavigationService
-    Private ReadOnly _geocodeService As Services.IGeocodeService
-    Private ReadOnly _weatherService As Services.IWeatherService
+    Private ReadOnly _weatherService As IWeatherService
+    Private ReadOnly _settingsService As ISettingsService
+
     Private _searchCancelTokenSource As CancellationTokenSource
 
 #Region "Constructors"
@@ -19,14 +21,18 @@ Public Class AddWeatherSourceViewModel
     Public Sub New(messageBus As IMessageBus,
                    dialogService As IDialogService,
                    navigationService As INavigationService,
-                   geocodeService As Services.IGeocodeService,
-                   weatherService As Services.IWeatherService)
+                   weatherService As IWeatherService,
+                   settingsService As ISettingsService)
 
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
-        _geocodeService = geocodeService
         _weatherService = weatherService
+        _settingsService = settingsService
+
+#If DEBUG Then
+        PostalCode = "46845"
+#End If
     End Sub
 
 #End Region
@@ -48,7 +54,6 @@ Public Class AddWeatherSourceViewModel
 
 #End Region
 
-
 #Region "IsSearching"
 
     Dim _IsSearching As Boolean
@@ -63,7 +68,6 @@ Public Class AddWeatherSourceViewModel
     End Property
 
 #End Region
-
 
 #End Region
 
@@ -90,30 +94,45 @@ Public Class AddWeatherSourceViewModel
         IsSearching = True
 
         Try
-            ' Find the location
-            Status = "Searching for " & PostalCode & "..."
+            Status = "Searching..."
+
+            ' search for the location
             _searchCancelTokenSource = New CancellationTokenSource
-            Dim location As Models.Location = Await _geocodeService.GetLocationByPostalCodeAsync(PostalCode, _searchCancelTokenSource.Token)
+            Dim location As Models.Location = Await _weatherService.GetLocationByPostalCodeAsync(PostalCode, _searchCancelTokenSource.Token)
 
-            ' see if the user canceled the process.
-            CheckSearchTokenStatus()
-
-            ' Do we have a location?
+            ' location is not found. notify user and bail.
             If location Is Nothing Then
-                _dialogService.ShowOkDialog("No Location Found", "There was no location found at the zip code: " & PostalCode & "." & Environment.NewLine & "Please try again.")
+                Status = "Could not find a weather station for postal code: " & PostalCode & ". Please try again."
                 Return
             End If
 
-            ' Get the weather for the zip code.
-            Dim x = _weatherService.GetWeatherByDay(New Point(location.Point.Latitude, location.Point.Longitude), Date.Now, 1, Services.NoaaWeatherFormats.Every24Hours, _searchCancelTokenSource.Token)
+            ' check if location already in cache.
+            Dim locations As IEnumerable(Of Models.Location) = Await _settingsService.GetSelectedLocationsAsync
+            If locations IsNot Nothing Then
+                Dim existingLocation As Models.Location = locations.Where(Function(o) o.Address.PostalCode.Equals(PostalCode)).SingleOrDefault
+                ' location already exits, notify user and bail.
+                If existingLocation IsNot Nothing Then
+                    Status = PostalCode & " already exists. Please try again."
+                    Return
+                End If
+            End If
 
-            Status = "Search Complete."
+            ' if we get to here, all conditions are met to enter the location.
+            ' ask the user if they want to add the location.
+            If _dialogService.ShowYesNoDialog("Weather Station Found!", "Found a station for '" & PostalCode & ": " & location.WeatherStation.Name & ". Do you want to use this station?") Then
+                Dim locationList As New List(Of Models.Location)
+                If locations IsNot Nothing Then locationList = New List(Of Models.Location)(locations)
+                locationList.Add(location)
+                Await _settingsService.SetSelectedLocationsAsync(locationList)
+            End If
+
+            Status = "Added " & PostalCode & " to cache."
+
         Catch ex As Exception
             Status = "There was a problem with the search: " & ex.Message
         End Try
 
         IsSearching = False
-
     End Sub
 
 #End Region
