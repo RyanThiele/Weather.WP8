@@ -107,13 +107,30 @@ Public Class MainViewModel
     ''' This is the trunk logic for the view model. So, the try/catch will go here.
     ''' </remarks>
     Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
+        If _IsIntilizing Then Return
+        _IsIntilizing = True
         Try
             Dim locations As IEnumerable(Of Models.Location) = Await _settingsService.GetSelectedLocationsAsync
+            If locations IsNot Nothing Then
+                ' when was the last check.
+                Dim locationLastChecked As DateTime? = (From location In locations
+                                                       Order By location.LastChecked Descending
+                                                       Select location.LastChecked).FirstOrDefault
+
+
+                If Not locationLastChecked.HasValue OrElse
+                    (locationLastChecked.HasValue AndAlso locationLastChecked.Value.AddHours(1) < DateTime.Now) Then
+                    ' refresh the data.
+                    Await _weatherService.GetCurrentObservationByIataAsync(locations(0).WeatherStation.ICAO, Nothing)
+
+                End If
+            End If
         Catch ex As Exception
             ' TODO: We need to recover here!
             Throw
         End Try
 
+        _IsIntilizing = False
     End Function
 
 

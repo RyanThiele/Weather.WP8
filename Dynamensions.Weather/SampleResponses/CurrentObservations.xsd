@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xsd:element name="current_observation">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="credit" type="xsd:string" />
+        <xsd:element name="credit_URL" type="xsd:string" />
+        <xsd:element name="image">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="url" type="xsd:string" />
+              <xsd:element name="title" type="xsd:string" />
+              <xsd:element name="link" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="suggested_pickup" type="xsd:string" />
+        <xsd:element name="suggested_pickup_period" type="xsd:unsignedByte" />
+        <xsd:element name="location" type="xsd:string" />
+        <xsd:element name="station_id" type="xsd:string" />
+        <xsd:element name="latitude" type="xsd:decimal" />
+        <xsd:element name="longitude" type="xsd:byte" />
+        <xsd:element name="observation_time" type="xsd:string" />
+        <xsd:element name="observation_time_rfc822" type="xsd:string" />
+        <xsd:element name="weather" type="xsd:string" />
+        <xsd:element name="temperature_string" type="xsd:string" />
+        <xsd:element name="temp_f" type="xsd:decimal" />
+        <xsd:element name="temp_c" type="xsd:decimal" />
+        <xsd:element name="relative_humidity" type="xsd:unsignedByte" />
+        <xsd:element name="wind_string" type="xsd:string" />
+        <xsd:element name="wind_dir" type="xsd:string" />
+        <xsd:element name="wind_degrees" type="xsd:unsignedByte" />
+        <xsd:element name="wind_mph" type="xsd:decimal" />
+        <xsd:element name="wind_kt" type="xsd:unsignedByte" />
+        <xsd:element name="pressure_in" type="xsd:decimal" />
+        <xsd:element name="dewpoint_string" type="xsd:string" />
+        <xsd:element name="dewpoint_f" type="xsd:decimal" />
+        <xsd:element name="dewpoint_c" type="xsd:decimal" />
+        <xsd:element name="heat_index_string" type="xsd:string" />
+        <xsd:element name="heat_index_f" type="xsd:unsignedByte" />
+        <xsd:element name="heat_index_c" type="xsd:unsignedByte" />
+        <xsd:element name="visibility_mi" type="xsd:decimal" />
+        <xsd:element name="icon_url_base" type="xsd:string" />
+        <xsd:element name="two_day_history_url" type="xsd:string" />
+        <xsd:element name="icon_url_name" type="xsd:string" />
+        <xsd:element name="ob_url" type="xsd:string" />
+        <xsd:element name="disclaimer_url" type="xsd:string" />
+        <xsd:element name="copyright_url" type="xsd:string" />
+        <xsd:element name="privacy_policy_url" type="xsd:string" />
+      </xsd:sequence>
+      <xsd:attribute name="version" type="xsd:decimal" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

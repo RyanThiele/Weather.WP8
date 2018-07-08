@@ -151,6 +151,7 @@
     <Compile Include="Messages\ResetDatabaseMessage.vb" />
     <Compile Include="Messages\StatusMessage.vb" />
     <Compile Include="Models\Address.vb" />
+    <Compile Include="Models\CurrentObserevations.vb" />
     <Compile Include="Models\Location.vb" />
     <Compile Include="Models\Noaa\Data.vb" />
     <Compile Include="Models\Noaa\DWML.vb" />
@@ -214,6 +215,9 @@
     <Content Include="Weather.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="SampleResponses\CurrentObservations.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SampleResponses\NOAAZipCodeToPoints.xsd">
       <SubType>Designer</SubType>
     </None>

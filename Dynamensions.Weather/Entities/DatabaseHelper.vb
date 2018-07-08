@@ -22,26 +22,24 @@ Friend Module DatabaseHelper
 
     Friend Sub MoveReferenceDatabase(databaseFileName As String, replaceExisting As Boolean, Optional messageBus As IMessageBus = Nothing)
         Dim iso = IsolatedStorageFile.GetUserStoreForApplication()
+        Dim dbExists As Boolean = iso.FileExists(databaseFileName)
 
-        Dim exists As Boolean = iso.FileExists(databaseFileName)
-        If exists Then
-            If replaceExisting Then
-                iso.DeleteFile(databaseFileName)
-            Else
-                Using input = Application.GetResourceStream(New Uri(databaseFileName, UriKind.Relative)).Stream
-                    Using output As IsolatedStorageFileStream = iso.CreateFile(databaseFileName)
-                        Dim readBuffer As Byte() = New Byte(4096) {}
-                        Dim bytesRead As Integer = -1
+        If replaceExisting AndAlso dbExists Then iso.DeleteFile(databaseFileName)
+        If Not replaceExisting AndAlso dbExists Then Return
 
-                        bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
-                        While bytesRead > 0
-                            output.Write(readBuffer, 0, bytesRead)
-                            bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
-                        End While
-                    End Using
-                End Using
-            End If
-        End If
+        ' if we get here, the user want to replace the database.
+        Using input = Application.GetResourceStream(New Uri(databaseFileName, UriKind.Relative)).Stream
+            Using output As IsolatedStorageFileStream = iso.CreateFile(databaseFileName)
+                Dim readBuffer As Byte() = New Byte(4096) {}
+                Dim bytesRead As Integer = -1
+
+                bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
+                While bytesRead > 0
+                    output.Write(readBuffer, 0, bytesRead)
+                    bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
+                End While
+            End Using
+        End Using
     End Sub
 
     Friend Async Function MoveReferenceDatabaseAsync(databaseFileName As String, replaceExisting As Boolean, messageBus As IMessageBus) As Task
