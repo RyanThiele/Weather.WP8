@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Linq.Mapping
 Imports System.Text
+Imports System.Data.Linq
 
 Namespace Entities
 
@@ -16,18 +17,16 @@ Namespace Entities
         <Column(DbType:="decimal(5,2) NOT NULL")> Public Property Longitude As Decimal
         <Column(CanBeNull:=True, DbType:="datetime NOT NULL")> Public Property LastUpdated As DateTime
 
-
-        <Association(Storage:="Station", ThisKey:="StationId", OtherKey:="Id", IsForeignKey:=True)>
-        Private _station As Station
+        Private _station As New EntityRef(Of Station)
+        <Association(Storage:="_station", ThisKey:="StationId", OtherKey:="Id", IsForeignKey:=True)>
         Public Property Station() As Station
             Get
-                Return _station
+                Return _station.Entity
             End Get
-            Set(ByVal value As Station)
-                _station = value
+            Set(value As Station)
+                _station.Entity = value
             End Set
         End Property
-
 
 
         Public ReadOnly Property DisplayString As String

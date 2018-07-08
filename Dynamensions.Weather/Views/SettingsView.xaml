@@ -15,6 +15,7 @@
     shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -36,7 +37,8 @@
             <StackPanel Visibility="{Binding Path=IsResetting, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}">
                 <TextBlock Text="{Binding Path=Status}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding Path=SubStatus}" TextWrapping="Wrap" />
-                <ProgressBar Value="{Binding Path=Progress}" />
+                <ProgressBar Value="{Binding Path=Progress}" Margin="0" Height="20" />
+                <TextBlock Text="{Binding Path=TimeRemaining, Converter={StaticResource TimeSpanToStringConverter}, StringFormat='{}Time Remaining: {0}'}" TextAlignment="Center" />
                 <TextBlock Text="{Binding Path=Progress, StringFormat='{}Percent Complete: {0:N2}%'}" TextAlignment="Center" />
             </StackPanel>
         </StackPanel>

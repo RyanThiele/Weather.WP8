@@ -25,6 +25,8 @@ Namespace Entities
         Public Locations As Table(Of Location)
         Public Stations As Table(Of Station)
 
+
+
         Public Function SubmitChangesAsync() As Task
             Dim tcs As New TaskCompletionSource(Of Object)
             Dim worker As New BackgroundWorker

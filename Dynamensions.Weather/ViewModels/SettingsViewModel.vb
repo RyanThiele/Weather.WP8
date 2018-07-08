@@ -18,6 +18,7 @@ Public Class SettingsViewModel
                                                     Status = message.Status
                                                     SubStatus = message.SubStatus
                                                     Progress = message.Progress
+                                                    TimeRemaining = message.TimeRemaining
                                                 End Sub)
     End Sub
 
@@ -39,6 +40,23 @@ Public Class SettingsViewModel
     End Property
 
 #End Region
+
+
+#Region "TimeRemaining"
+
+    Dim _TimeRemaining As TimeSpan
+    Public Property TimeRemaining As TimeSpan
+        Get
+            Return _TimeRemaining
+        End Get
+        Set(value As TimeSpan)
+            _TimeRemaining = value
+            OnPropertyChanged("TimeRemaining")
+        End Set
+    End Property
+
+#End Region
+
 
 #Region "Progress"
 
@@ -94,7 +112,7 @@ Public Class SettingsViewModel
     Private Async Sub ExecuteResetDatabase()
         If _dialogService.ShowYesNoDialog("Warning! Data Will Be Deleted!", "Are you sure you want to reset the database? All data will be rebuilt!") Then
             IsResetting = True
-            Await DatabaseHelper.RefreshDataAsync(True, DatabaseDataOptions.Refresh, DatabaseDataOptions.Refresh, _messageBus)
+            Await DatabaseHelper.RefreshDataAsync(true, DatabaseDataOptions.Refresh, DatabaseDataOptions.Refresh, _messageBus)
             IsResetting = False
         End If
     End Sub

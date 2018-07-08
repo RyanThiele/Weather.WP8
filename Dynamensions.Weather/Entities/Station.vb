@@ -1,12 +1,13 @@
 ﻿Imports System.Data.Linq.Mapping
 Imports System.ComponentModel
+Imports System.Data.Linq
 
 Namespace Entities
 
     <Table(Name:="Stations")>
     Public Class Station
 
-        <Column(IsPrimaryKey:=True, CanBeNull:=False, AutoSync:=AutoSync.OnInsert, DbType:="int NOT NULL IDENTITY(1,1)", IsDbGenerated:=True)> Public Property Id As Integer
+        <Column(IsPrimaryKey:=True, IsDbGenerated:=True)> Public Property Id As Integer
         <Column(CanBeNull:=False, DbType:="nvarchar(2) NOT NULL")> Public Property StateOrProvince As String
         <Column(CanBeNull:=False, DbType:="nvarchar(16) NOT NULL")> Public Property Station As String
         <Column(CanBeNull:=True, DbType:="nvarchar(4) NULL")> Public Property ICAO As String
@@ -24,6 +25,19 @@ Namespace Entities
         <Column(CanBeNull:=True, DbType:="int NULL")> Public Property Priority As Integer?
         <Column(CanBeNull:=True, DbType:="nchar(2) NULL")> Public Property CountryCode As String
         <Column(CanBeNull:=True, DbType:="datetime NOT NULL")> Public Property LastUpdated As DateTime
+
+
+        Private _locations As New EntitySet(Of Location)
+
+        <Association(Storage:="_locations", OtherKey:="StationId", ThisKey:="Id")>
+        Public Property Locations As EntitySet(Of Location)
+            Get
+                Return _locations
+            End Get
+            Set(value As EntitySet(Of Location))
+                _locations = value
+            End Set
+        End Property
 
     End Class
 

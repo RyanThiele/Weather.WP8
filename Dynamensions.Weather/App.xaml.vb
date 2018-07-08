@@ -51,7 +51,7 @@ Partial Public Class App
         '    'db.SubmitChanges()
         'End Using
 
-        'DatabaseHelper.MoveReferenceDatabase("Weather.sdf")
+        DatabaseHelper.MoveReferenceDatabase("Weather.sdf", False)
 
     End Sub
 

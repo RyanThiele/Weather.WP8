@@ -141,6 +141,7 @@
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
+    <Compile Include="Converters\TimeSpanToStringConverter.vb" />
     <Compile Include="Entities\DatabaseHelper.vb" />
     <Compile Include="Entities\Location.vb" />
     <Compile Include="Entities\PostalCodeStation.vb" />
