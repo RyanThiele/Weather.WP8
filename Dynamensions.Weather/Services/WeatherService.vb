@@ -13,72 +13,6 @@ Namespace Services
     Public Class WeatherService
         Implements IWeatherService
 
-
-        ' TODO: Check if needed.
-        Public Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Models.Location) Implements IWeatherService.GetLocationByPostalCodeAsync
-            Dim tcs As New TaskCompletionSource(Of Models.Location)
-            Dim model As Models.Location = Nothing
-            Dim worker As New BackgroundWorker
-
-            token.Register(AddressOf worker.CancelAsync)
-            AddHandler worker.DoWork, Sub(s, e)
-                                          Using db As New Entities.DbDataContext()
-                                              Dim query = From location In db.Locations
-                                                          Join station In db.Stations On station.Id Equals location.StationId
-                                                          Where location.PostalCode.Equals(postalCode)
-                                                          Select New Models.Location With {
-                                                              .Address = New Models.Address With {
-                                                                  .City = location.City,
-                                                                  .Country = location.County,
-                                                                  .County = location.County,
-                                                                  .PostalCode = location.PostalCode,
-                                                                  .StateOrRegion = location.StateOrProvince},
-                                                              .WeatherStation = New Models.WeatherStation With {
-                                                                  .Name = station.Station,
-                                                                  .ICAO = station.ICAO,
-                                                                  .IATA = station.IATA,
-                                                                  .Latitude = station.Latitude,
-                                                                  .Longitude = station.Longitude}}
-
-                                              model = query.SingleOrDefault
-                                          End Using
-                                      End Sub
-
-            AddHandler worker.RunWorkerCompleted, Sub(s, e)
-                                                      tcs.TrySetResult(model)
-                                                  End Sub
-
-            worker.RunWorkerAsync()
-            Return tcs.Task
-        End Function
-
-        ' TODO: Check if needed.
-        Public Function GetStationByPostalCodeAsync(postalcode As String, token As CancellationToken) As Task(Of Station) Implements IWeatherService.GetStationByPostalCodeAsync
-            Dim tcs As New TaskCompletionSource(Of Station)
-            Dim worker As New BackgroundWorker
-            Dim entity As Station = Nothing
-            token.Register(AddressOf worker.CancelAsync)
-
-            AddHandler worker.DoWork, Sub(s, e)
-                                          Using db As New DbDataContext
-                                              Dim query = From location In db.Locations
-                                                          Join station In db.Stations On station.Id Equals location.StationId
-                                                          Where location.PostalCode.Equals(postalcode)
-                                                          Select station
-
-                                              entity = query.SingleOrDefault
-                                          End Using
-                                      End Sub
-
-            AddHandler worker.RunWorkerCompleted, Sub(s, e)
-                                                      tcs.SetResult(entity)
-                                                  End Sub
-
-            worker.RunWorkerAsync()
-            Return tcs.Task
-        End Function
-
-
         Public Async Function GetCurrentObservationByIcaoAsync(icao As String, token As CancellationToken) As Task(Of CurrentObservations) Implements IWeatherService.GetCurrentObservationByIcaoAsync
             Dim url As String = "https://w1.weather.gov/xml/current_obs/" & icao & ".xml"
             Dim client As New WebClient
@@ -132,9 +66,34 @@ Namespace Services
             Return model
         End Function
 
-        Public Async Function GetLocationByLatitudeLongitudeAsync(latitude As Decimal, longitude As Decimal, token As CancellationToken) As Task(Of Models.Location) Implements IWeatherService.GetLocationByLatitudeLongitudeAsync
-            Dim closestPostalcode As String = Await DatabaseHelper.GetClosestPostalCodeByLatLongAsync(latitude, longitude)
-            Return Await GetLocationByPostalCodeAsync(closestPostalcode, token)
+        Public Function GetWeatherStationsByPostalCodeAsync(postalCode As String, numberOfStations As Integer, token As CancellationToken) As Task(Of IEnumerable(Of WeatherStation)) Implements IWeatherService.GetWeatherStationsByPostalCodeAsync
+            Dim tcs As New TaskCompletionSource(Of IEnumerable(Of WeatherStation))
+            Dim models As IEnumerable(Of WeatherStation) = Nothing
+            Dim worker As New BackgroundWorker
+
+            token.Register(AddressOf worker.CancelAsync)
+            AddHandler worker.DoWork, Sub(s, e)
+                                          Using db As New Entities.DbDataContext()
+                                              Dim query = From location In db.Locations
+                                                          Join station In db.Stations On station.Id Equals location.StationId
+                                                          Where location.PostalCode.Equals(postalCode)
+                                                          Select New Models.WeatherStation With {
+                                                                  .Name = station.Station,
+                                                                  .ICAO = station.ICAO,
+                                                                  .IATA = station.IATA,
+                                                                  .Latitude = station.Latitude,
+                                                                  .Longitude = station.Longitude}
+
+                                              models = query.Take(numberOfStations)
+                                          End Using
+                                      End Sub
+
+            AddHandler worker.RunWorkerCompleted, Sub(s, e)
+                                                      tcs.TrySetResult(models)
+                                                  End Sub
+
+            worker.RunWorkerAsync()
+            Return tcs.Task
         End Function
     End Class
 

@@ -9,7 +9,11 @@ Public Class MainViewModel
     Private ReadOnly _navigationService As INavigationService
     Private ReadOnly _settingsService As ISettingsService
     Private ReadOnly _weatherService As IWeatherService
+
+
+    Private ReadOnly _locationService As ILocationService
     Private _locationTokenSource As CancellationTokenSource
+
 
 #Region "Constructors"
 
@@ -17,10 +21,12 @@ Public Class MainViewModel
 
     End Sub
 
-    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, settingsService As ISettingsService, weatherService As IWeatherService)
+    Public Sub New(messageBus As IMessageBus, dialogService As IDialogService, navigationService As INavigationService, locationService As ILocationService, settingsService As ISettingsService, weatherService As IWeatherService)
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
+        _locationService = locationService
+
         _settingsService = settingsService
         _weatherService = weatherService
 
@@ -141,7 +147,7 @@ Public Class MainViewModel
             If locations Is Nothing Then
                 Dim tokenSource As New CancellationTokenSource
                 Dim currentGeoCoordinate As Models.GeoCoordinate = Await _settingsService.GetCurrentLocationAsync
-                Dim location As Models.Location = Await _weatherService.GetLocationByLatitudeLongitudeAsync(currentGeoCoordinate.Latitude, currentGeoCoordinate.Longitude, tokenSource.Token)
+                Dim location As Models.Location = Await _locationService.GetLocationByLatitudeLongitudeAsync(currentGeoCoordinate.Latitude, currentGeoCoordinate.Longitude, 3, tokenSource.Token)
 
                 If location Is Nothing Then Return
                 locations = {location}

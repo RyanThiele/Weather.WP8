@@ -92,6 +92,9 @@ Partial Public Class App
         builder.RegisterType(Of Services.SettingsService).As(Of ISettingsService)()
         builder.RegisterType(Of Services.WeatherService).As(Of IWeatherService)()
 
+        ' Keep
+        builder.RegisterType(Of Services.LocationService).As(Of ILocationService)()
+
         ' ViewModels
         builder.RegisterType(GetType(MainViewModel))
         builder.RegisterType(GetType(AddWeatherSourceViewModel))

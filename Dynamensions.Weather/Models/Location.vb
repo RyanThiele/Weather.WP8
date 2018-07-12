@@ -5,9 +5,9 @@ Namespace Models
 
     Public Class Location
 
-        Public Property Name As String
+        Public Property Point As GeoCoordinate
         Public Property Address() As Address
-        Public Property WeatherStation As WeatherStation
+        Public Property WeatherStations As IEnumerable(Of WeatherStation)
         Public Property LastChecked As DateTime?
 
     End Class
