@@ -88,6 +88,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="system.data.linq" />
+    <Reference Include="System.Device" />
     <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\sl4-windowsphone71\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -151,7 +152,8 @@
     <Compile Include="Messages\ResetDatabaseMessage.vb" />
     <Compile Include="Messages\StatusMessage.vb" />
     <Compile Include="Models\Address.vb" />
-    <Compile Include="Models\CurrentObserevations.vb" />
+    <Compile Include="Models\CurrentObservations.vb" />
+    <Compile Include="Models\GeoCoordinate.vb" />
     <Compile Include="Models\Location.vb" />
     <Compile Include="Models\Noaa\Data.vb" />
     <Compile Include="Models\Noaa\DWML.vb" />
@@ -174,6 +176,8 @@
     <Compile Include="Services\SettingsService.vb" />
     <Compile Include="Services\WeatherService.vb" />
     <Compile Include="ViewModels\AddWeatherSourceViewModel.vb" />
+    <Compile Include="ViewModels\CurrentObservationsViewModel.vb" />
+    <Compile Include="ViewModels\LocationViewModel.vb" />
     <Compile Include="ViewModels\MainViewModel.vb" />
     <Compile Include="ViewModels\SettingsViewModel.vb" />
     <Compile Include="ViewModels\WeatherSourceListItemViewModel.vb" />
@@ -182,6 +186,9 @@
     <Compile Include="ViewModels\WeatherSourcesViewModel.vb" />
     <Compile Include="Views\AddWeatherSourceView.xaml.vb">
       <DependentUpon>AddWeatherSourceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CurrentObservationsView.xaml.vb">
+      <DependentUpon>CurrentObservationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.vb">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -199,6 +206,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CurrentObservationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -209,9 +220,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Settings.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Weather.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -252,6 +260,10 @@
   <ItemGroup>
     <DesignData Include="SampleData\AddWeatherSourceViewModelSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+    </DesignData>
+    <DesignData Include="SampleData\CurrentObserevationsSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
     </DesignData>
     <DesignData Include="SampleData\MainViewModelSampleData.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>

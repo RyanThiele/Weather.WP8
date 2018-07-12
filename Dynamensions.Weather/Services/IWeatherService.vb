@@ -12,8 +12,11 @@ Namespace Services
 
         Function GetStationByPostalCodeAsync(postalcode As String, token As CancellationToken) As Task(Of Entities.Station)
 
+        Function GetCurrentObservationByIcaoAsync(icao As String, token As CancellationToken) As Task(Of CurrentObservations)
+
+
         Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Models.Location)
-        Function GetCurrentObservationByIataAsync(icao As String, token As CancellationToken) As Task(Of CurrentObserevations)
+        Function GetLocationByLatitudeLongitudeAsync(latitude As Decimal, longitude As Decimal, token As CancellationToken) As Task(Of Models.Location)
 
 
         'Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Location)

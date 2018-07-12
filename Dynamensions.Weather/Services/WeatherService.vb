@@ -6,6 +6,7 @@ Imports System.Xml.Linq
 Imports System.Threading
 Imports System.ComponentModel
 Imports Dynamensions.Weather.Entities
+Imports Dynamensions.Weather.Models
 
 Namespace Services
 
@@ -78,7 +79,7 @@ Namespace Services
         End Function
 
 
-        Public Async Function GetCurrentObservationByIataAsync(icao As String, token As CancellationToken) As Task(Of CurrentObserevations) Implements IWeatherService.GetCurrentObservationByIataAsync
+        Public Async Function GetCurrentObservationByIcaoAsync(icao As String, token As CancellationToken) As Task(Of CurrentObservations) Implements IWeatherService.GetCurrentObservationByIcaoAsync
             Dim url As String = "https://w1.weather.gov/xml/current_obs/" & icao & ".xml"
             Dim client As New WebClient
 
@@ -92,7 +93,7 @@ Namespace Services
 
             If root Is Nothing Then Return Nothing
 
-            Dim model As New CurrentObserevations
+            Dim model As New CurrentObservations
 
             Dim refreshInterval As Integer
             Dim latitude, longitude As Decimal
@@ -109,8 +110,8 @@ Namespace Services
             model.UpdatedTimeString = root.<observation_time>.SingleOrDefault.ValueIfExists
             model.Weather = root.<weather>.SingleOrDefault.ValueIfExists
             model.TemperatureString = root.<temperature_string>.SingleOrDefault.ValueIfExists
-            model.TemerpatureF = root.<temp_f>.SingleOrDefault.ValueIfExists.ToDecimal
-            model.TemerpatureC = root.<temp_c>.SingleOrDefault.ValueIfExists.ToDecimal
+            model.TemperatureF = root.<temp_f>.SingleOrDefault.ValueIfExists.ToDecimal
+            model.TemperatureC = root.<temp_c>.SingleOrDefault.ValueIfExists.ToDecimal
             model.RelativeHumidity = root.<relative_humidity>.SingleOrDefault.ValueIfExists.ToInteger
             model.WindString = root.<wind_string>.SingleOrDefault.ValueIfExists
             model.WindDirection = root.<wind_dir>.SingleOrDefault.ValueIfExists
@@ -131,6 +132,10 @@ Namespace Services
             Return model
         End Function
 
+        Public Async Function GetLocationByLatitudeLongitudeAsync(latitude As Decimal, longitude As Decimal, token As CancellationToken) As Task(Of Models.Location) Implements IWeatherService.GetLocationByLatitudeLongitudeAsync
+            Dim closestPostalcode As String = Await DatabaseHelper.GetClosestPostalCodeByLatLongAsync(latitude, longitude)
+            Return Await GetLocationByPostalCodeAsync(closestPostalcode, token)
+        End Function
     End Class
 
 End Namespace

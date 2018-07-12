@@ -8,29 +8,15 @@ Public Class ViewModelBase
     Private Const APPMANIFESTNAME As String = "WMAppManifest.xml"
     Protected _IsIntilizing As Boolean
 
-
     Public Sub New()
         Dim AssemblyTitleAttributes As AssemblyTitleAttribute() = CType(Assembly.GetExecutingAssembly().GetCustomAttributes(GetType(AssemblyTitleAttribute), False), AssemblyTitleAttribute())
         _applicationTitle = AssemblyTitleAttributes.Select(Function(a) a.Title).FirstOrDefault()
     End Sub
 
-    Public Overridable Function InitializeAsync(Optional parameter As Object = Nothing) As Task
-        Dim tcs As New TaskCompletionSource(Of Object)
+    Public Overridable Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
         _IsIntilizing = True
-        'Await DelayAsync(20)
+        Await TaskEx.Delay(0)
         _IsIntilizing = False
-
-        tcs.SetResult(Nothing)
-        Return tcs.Task
-    End Function
-
-    Protected Function DelayAsync(milliseconds As Integer) As Task
-        Dim tcs As New TaskCompletionSource(Of Boolean)
-        Dim timer As New System.Threading.Timer(Sub()
-                                                    tcs.TrySetResult(True)
-                                                End Sub, Nothing, milliseconds, 0)
-
-        Return tcs.Task
     End Function
 
 #Region "Properties"

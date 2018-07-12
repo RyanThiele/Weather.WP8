@@ -60,7 +60,7 @@ Partial Public Class App
 
     Private isLoading As Boolean
     Private Async Sub OnNavigated(sender As Object, e As NavigationEventArgs)
-        If RootFrame.CurrentSource IsNot Nothing Then
+        If e.Content IsNot Nothing Then
             ' get the name of the view
             Dim view As Page = CType(RootFrame.Content, Page)
             Dim viewType As Type = e.Content.GetType

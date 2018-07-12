@@ -330,7 +330,7 @@ Friend Module DatabaseHelper
         End Using
     End Function
 
-    Private Function GetClosesStationsByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of Station)
+    Friend Function GetClosesStationsByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of Station)
         Dim tcs As New TaskCompletionSource(Of Station)
         Dim worker As New BackgroundWorker
         Dim foundStation As Station = Nothing
@@ -359,6 +359,30 @@ Friend Module DatabaseHelper
 
         AddHandler worker.RunWorkerCompleted, Sub(s, e)
                                                   tcs.SetResult(foundStation)
+                                              End Sub
+
+        worker.RunWorkerAsync()
+        Return tcs.Task
+    End Function
+
+
+    Friend Function GetClosestPostalCodeByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of String)
+        Dim tcs As New TaskCompletionSource(Of String)
+        Dim worker As New BackgroundWorker
+        Dim entity As String = Nothing
+
+        AddHandler worker.DoWork, Sub(s, e)
+                                      Using db As New DbDataContext
+                                          Dim query = From location In db.Locations
+                                                      Order By Math.Abs(Math.Abs(location.Latitude) - Math.Abs(latitude)) + Math.Abs(Math.Abs(location.Longitude) - Math.Abs(longitude))
+                                                      Select location.PostalCode
+
+                                          entity = query.FirstOrDefault
+                                      End Using
+                                  End Sub
+
+        AddHandler worker.RunWorkerCompleted, Sub(s, e)
+                                                  tcs.SetResult(entity)
                                               End Sub
 
         worker.RunWorkerAsync()
