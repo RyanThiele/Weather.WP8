@@ -169,9 +169,11 @@
     <Compile Include="Entities\DataContext.vb" />
     <Compile Include="Services\DialogService.vb" />
     <Compile Include="Services\IDialogService.vb" />
+    <Compile Include="Services\ILocationService.vb" />
     <Compile Include="Services\INavigationService.vb" />
     <Compile Include="Services\ISettingsService.vb" />
     <Compile Include="Services\IWeatherService.vb" />
+    <Compile Include="Services\LocationService.vb" />
     <Compile Include="Services\NavigationService.vb" />
     <Compile Include="Services\SettingsService.vb" />
     <Compile Include="Services\WeatherService.vb" />

@@ -9,19 +9,8 @@ Namespace Services
     End Enum
 
     Public Interface IWeatherService
-
-        Function GetStationByPostalCodeAsync(postalcode As String, token As CancellationToken) As Task(Of Entities.Station)
-
         Function GetCurrentObservationByIcaoAsync(icao As String, token As CancellationToken) As Task(Of CurrentObservations)
-
-
-        Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Models.Location)
-        Function GetLocationByLatitudeLongitudeAsync(latitude As Decimal, longitude As Decimal, token As CancellationToken) As Task(Of Models.Location)
-
-
-        'Function GetLocationByPostalCodeAsync(postalCode As String, token As CancellationToken) As Task(Of Location)
-        'Function GetWeatherByDayAsync(postalCode As String, startDate As DateTime, numberOfDays As Integer, format As NoaaWeatherFormats, token As CancellationToken) As Noaa.WeatherByDay
-
+        Function GetWeatherStationsByPostalCodeAsync(postalCode As String, numberOfStations As Integer, token As CancellationToken) As Task(Of IEnumerable(Of Models.WeatherStation))
     End Interface
 
 End Namespace

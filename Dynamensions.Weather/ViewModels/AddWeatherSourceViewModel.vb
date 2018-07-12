@@ -10,6 +10,7 @@ Public Class AddWeatherSourceViewModel
     Private ReadOnly _weatherService As IWeatherService
     Private ReadOnly _settingsService As ISettingsService
 
+    Private ReadOnly _locationService As ILocationService
     Private _searchCancelTokenSource As CancellationTokenSource
 
 #Region "Constructors"
@@ -21,12 +22,14 @@ Public Class AddWeatherSourceViewModel
     Public Sub New(messageBus As IMessageBus,
                    dialogService As IDialogService,
                    navigationService As INavigationService,
+                   locationService As ILocationService,
                    weatherService As IWeatherService,
                    settingsService As ISettingsService)
 
         _messageBus = messageBus
         _dialogService = dialogService
         _navigationService = navigationService
+        _locationService = locationService
         _weatherService = weatherService
         _settingsService = settingsService
 
@@ -98,7 +101,7 @@ Public Class AddWeatherSourceViewModel
 
             ' search for the location
             _searchCancelTokenSource = New CancellationTokenSource
-            Dim location As Models.Location = Await _weatherService.GetLocationByPostalCodeAsync(PostalCode, _searchCancelTokenSource.Token)
+            Dim location As Models.Location = Await _locationService.GetLocationByPostalCodeAsync(PostalCode, 3, _searchCancelTokenSource.Token)
 
             ' location is not found. notify user and bail.
             If location Is Nothing Then
@@ -119,7 +122,7 @@ Public Class AddWeatherSourceViewModel
 
             ' if we get to here, all conditions are met to enter the location.
             ' ask the user if they want to add the location.
-            If _dialogService.ShowYesNoDialog("Weather Station Found!", "Found a station for '" & PostalCode & ": " & location.WeatherStation.Name & ". Do you want to use this station?") Then
+            If _dialogService.ShowYesNoDialog("Weather Station Found!", "Found a station for '" & PostalCode & ": " & location.WeatherStations.First.Name & ". Do you want to use this station?") Then
                 Dim locationList As New List(Of Models.Location)
                 If locations IsNot Nothing Then locationList = New List(Of Models.Location)(locations)
                 locationList.Add(location)

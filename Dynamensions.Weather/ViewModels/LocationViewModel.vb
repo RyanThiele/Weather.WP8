@@ -192,7 +192,7 @@ Public Class LocationViewModel
     Private Async Function UpdateCurrentObservationsAsync() As Task
         If CurrentObservations IsNot Nothing AndAlso CurrentObservations.LastChecked.AddMinutes(CurrentObservations.RefreshTime.TotalMinutes) < DateTime.Now Then Return
         ' get the current observations
-        CurrentObservations = Await _weatherService.GetCurrentObservationByIcaoAsync(_model.WeatherStation.ICAO, _cancelationTokenSource.Token)
+        CurrentObservations = Await _weatherService.GetCurrentObservationByIcaoAsync(_model.WeatherStations.First.ICAO, _cancelationTokenSource.Token)
     End Function
 
 #End Region
