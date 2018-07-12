@@ -22,26 +22,24 @@ Friend Module DatabaseHelper
 
     Friend Sub MoveReferenceDatabase(databaseFileName As String, replaceExisting As Boolean, Optional messageBus As IMessageBus = Nothing)
         Dim iso = IsolatedStorageFile.GetUserStoreForApplication()
+        Dim dbExists As Boolean = iso.FileExists(databaseFileName)
 
-        Dim exists As Boolean = iso.FileExists(databaseFileName)
-        If exists Then
-            If replaceExisting Then
-                iso.DeleteFile(databaseFileName)
-            Else
-                Using input = Application.GetResourceStream(New Uri(databaseFileName, UriKind.Relative)).Stream
-                    Using output As IsolatedStorageFileStream = iso.CreateFile(databaseFileName)
-                        Dim readBuffer As Byte() = New Byte(4096) {}
-                        Dim bytesRead As Integer = -1
+        If replaceExisting AndAlso dbExists Then iso.DeleteFile(databaseFileName)
+        If Not replaceExisting AndAlso dbExists Then Return
 
-                        bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
-                        While bytesRead > 0
-                            output.Write(readBuffer, 0, bytesRead)
-                            bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
-                        End While
-                    End Using
-                End Using
-            End If
-        End If
+        ' if we get here, the user want to replace the database.
+        Using input = Application.GetResourceStream(New Uri(databaseFileName, UriKind.Relative)).Stream
+            Using output As IsolatedStorageFileStream = iso.CreateFile(databaseFileName)
+                Dim readBuffer As Byte() = New Byte(4096) {}
+                Dim bytesRead As Integer = -1
+
+                bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
+                While bytesRead > 0
+                    output.Write(readBuffer, 0, bytesRead)
+                    bytesRead = input.Read(readBuffer, 0, readBuffer.Length)
+                End While
+            End Using
+        End Using
     End Sub
 
     Friend Async Function MoveReferenceDatabaseAsync(databaseFileName As String, replaceExisting As Boolean, messageBus As IMessageBus) As Task
@@ -332,7 +330,7 @@ Friend Module DatabaseHelper
         End Using
     End Function
 
-    Private Function GetClosesStationsByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of Station)
+    Friend Function GetClosesStationsByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of Station)
         Dim tcs As New TaskCompletionSource(Of Station)
         Dim worker As New BackgroundWorker
         Dim foundStation As Station = Nothing
@@ -361,6 +359,30 @@ Friend Module DatabaseHelper
 
         AddHandler worker.RunWorkerCompleted, Sub(s, e)
                                                   tcs.SetResult(foundStation)
+                                              End Sub
+
+        worker.RunWorkerAsync()
+        Return tcs.Task
+    End Function
+
+
+    Friend Function GetClosestPostalCodeByLatLongAsync(latitude As Decimal, longitude As Decimal) As Task(Of String)
+        Dim tcs As New TaskCompletionSource(Of String)
+        Dim worker As New BackgroundWorker
+        Dim entity As String = Nothing
+
+        AddHandler worker.DoWork, Sub(s, e)
+                                      Using db As New DbDataContext
+                                          Dim query = From location In db.Locations
+                                                      Order By Math.Abs(Math.Abs(location.Latitude) - Math.Abs(latitude)) + Math.Abs(Math.Abs(location.Longitude) - Math.Abs(longitude))
+                                                      Select location.PostalCode
+
+                                          entity = query.FirstOrDefault
+                                      End Using
+                                  End Sub
+
+        AddHandler worker.RunWorkerCompleted, Sub(s, e)
+                                                  tcs.SetResult(entity)
                                               End Sub
 
         worker.RunWorkerAsync()

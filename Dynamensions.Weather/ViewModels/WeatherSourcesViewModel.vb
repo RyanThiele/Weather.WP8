@@ -75,6 +75,7 @@ Public Class WeatherSourcesViewModel
 #Region "Methods"
 
     Public Overrides Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
+        Await TaskEx.Delay(0)
         Try
             ' Get the selected sources
             'Dim selectedWeatherSources = Await _settingsService.GetSelectedWeatherSourcesAsync()
@@ -90,6 +91,7 @@ Public Class WeatherSourcesViewModel
     End Function
 
     Private Async Sub OnRemoveWeatherSource(message As RemoveWeatherSourceMessage)
+        Await TaskEx.Delay(0)
         Try
             'Dim weatherSources As New List(Of WeatherSource)(Me.WeatherSources.Select(Function(viewModel) New WeatherSource() With {.ZipCode = viewModel.ZipCode}))
             'weatherSources.Remove(message.WeatherSource)

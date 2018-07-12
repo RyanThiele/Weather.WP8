@@ -8,12 +8,14 @@ Imports System.Collections.ObjectModel
 Imports System.Linq
 Imports System.IO.IsolatedStorage
 Imports Dynamensions.Weather.Models
+Imports System.Device.Location
 
 
 Namespace Services
 
     Public Class SettingsService
         Implements ISettingsService
+
 
 
         Private ReadOnly _messageBus As IMessageBus
@@ -142,6 +144,27 @@ Namespace Services
                                                       tcs.SetResult(Nothing)
                                                   End Sub
 
+            worker.RunWorkerAsync()
+            Return tcs.Task
+        End Function
+
+        Public Function GetCurrentLocationAsync() As Task(Of Models.GeoCoordinate) Implements ISettingsService.GetCurrentLocationAsync
+            Dim tcs As New TaskCompletionSource(Of Models.GeoCoordinate)
+            Dim worker As New BackgroundWorker
+            Dim model As Models.GeoCoordinate = Nothing
+
+            AddHandler worker.DoWork, Sub(s, e)
+                                          Dim geolocation As New GeoCoordinateWatcher(GeoPositionAccuracy.High)
+                                          geolocation.Start()
+                                          model = New Models.GeoCoordinate With {
+                                              .Latitude = geolocation.Position.Location.Latitude,
+                                              .Longitude = geolocation.Position.Location.Longitude}
+                                          geolocation.Stop()
+                                      End Sub
+
+            AddHandler worker.RunWorkerCompleted, Sub(s, e)
+                                                      tcs.SetResult(model)
+                                                  End Sub
             worker.RunWorkerAsync()
             Return tcs.Task
         End Function

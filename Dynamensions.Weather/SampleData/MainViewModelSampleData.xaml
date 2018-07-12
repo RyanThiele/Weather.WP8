@@ -1,4 +1,6 @@
-<Weather:MainViewModel xmlns:Weather="clr-namespace:Dynamensions.Weather" Status="Parturient vel" Title="Nam amet">
+<Weather:MainViewModel xmlns:Weather="clr-namespace:Dynamensions.Weather" 
+                       xmlns:Models="clr-namespace:Dynamensions.Weather.Models"
+                       Status="Parturient vel" Title="Nam amet">
     <Weather:MainViewModel.WeatherSourcesViewModel>
         <Weather:WeatherSourcesViewModel Title="Class nam curabitur">
             <Weather:WeatherSourcesViewModel.WeatherSources>
@@ -15,4 +17,76 @@
             </Weather:WeatherSourcesViewModel.WeatherSources>
         </Weather:WeatherSourcesViewModel>
     </Weather:MainViewModel.WeatherSourcesViewModel>
+    <Weather:MainViewModel.LocationViewModels>
+        <Weather:LocationViewModel Title="Elkhart, IN">
+            <Weather:LocationViewModel.CurrentObservations>
+                <Models:CurrentObservations xmlns:Models="clr-namespace:Dynamensions.Weather.Models" 
+                             xmlns:System="clr-namespace:System;assembly=mscorlib" 
+                             StationId="Lorem sed facilisis accumsan" 
+                             MoreInformation="Curae donec etiam elementum fusce" 
+                             RefreshTime="1:00:00"
+                             Location="Praesent dignissim" 
+                             Latitude="123.45"
+                             Longitude="543.21"
+                             UpdatedTime="07/09/2018 02:44:35" 
+                             UpdatedTimeString="Duis fringilla est vivamus nunc" 
+                             Weather="Vestibulum habitasse adipiscing"
+                             TemperatureString="Cras quisque fermentum dis" 
+                             TemperatureF="12"
+                             TemperatureC="21"
+                             RelativeHumidity="11" 
+                             WindString="Amet ante hendrerit leo" 
+                             WindDirection="NW" 
+                             WindDegrees="95" 
+                             WindMph="85"
+                             WindKnots="75"
+                             PressureIn="12.22"
+                             DewPointString="Aliquam curabitur nam phasellus" 
+                             DewPointF="45"
+                             DewPointC="54"
+                             HeatIndexString="Maecenas integer consequat class convallis" 
+                             HeatIndexF="56"
+                             HeatIndexC="65"
+                             VisibilityMi="12"
+                             LastChecked="07/09/2018 02:44:35"
+                             Icon="http://www.noaa.gov/sites/all/themes/custom/noaa/images/noaa_logo_circle_bw_72x72.svg">
+                </Models:CurrentObservations>
+            </Weather:LocationViewModel.CurrentObservations>
+        </Weather:LocationViewModel>
+        <Weather:LocationViewModel Title="Elkhart, IN">
+            <Weather:LocationViewModel.CurrentObservations>
+                <Models:CurrentObservations xmlns:Models="clr-namespace:Dynamensions.Weather.Models" 
+                             xmlns:System="clr-namespace:System;assembly=mscorlib" 
+                             StationId="Lorem sed facilisis accumsan" 
+                             MoreInformation="Curae donec etiam elementum fusce" 
+                             RefreshTime="1:00:00"
+                             Location="Praesent dignissim" 
+                             Latitude="123.45"
+                             Longitude="543.21"
+                             UpdatedTime="07/09/2018 02:44:35" 
+                             UpdatedTimeString="Duis fringilla est vivamus nunc" 
+                             Weather="Vestibulum habitasse adipiscing"
+                             TemperatureString="Cras quisque fermentum dis" 
+                             TemperatureF="12"
+                             TemperatureC="21"
+                             RelativeHumidity="11" 
+                             WindString="Amet ante hendrerit leo" 
+                             WindDirection="NW" 
+                             WindDegrees="95" 
+                             WindMph="85"
+                             WindKnots="75"
+                             PressureIn="12.22"
+                             DewPointString="Aliquam curabitur nam phasellus" 
+                             DewPointF="45"
+                             DewPointC="54"
+                             HeatIndexString="Maecenas integer consequat class convallis" 
+                             HeatIndexF="56"
+                             HeatIndexC="65"
+                             VisibilityMi="12"
+                             LastChecked="07/09/2018 02:44:35"
+                             Icon="http://www.noaa.gov/sites/all/themes/custom/noaa/images/noaa_logo_circle_bw_72x72.svg">
+                </Models:CurrentObservations>
+            </Weather:LocationViewModel.CurrentObservations>
+        </Weather:LocationViewModel>
+    </Weather:MainViewModel.LocationViewModels>
 </Weather:MainViewModel>

@@ -1,12 +1,12 @@
 ﻿Imports System.Linq
 Imports System.Reflection
+Imports System.Threading
 
 Public Class ViewModelBase
     Inherits ObservableObject
 
     Private Const APPMANIFESTNAME As String = "WMAppManifest.xml"
-
-
+    Protected _IsIntilizing As Boolean
 
     Public Sub New()
         Dim AssemblyTitleAttributes As AssemblyTitleAttribute() = CType(Assembly.GetExecutingAssembly().GetCustomAttributes(GetType(AssemblyTitleAttribute), False), AssemblyTitleAttribute())
@@ -14,16 +14,9 @@ Public Class ViewModelBase
     End Sub
 
     Public Overridable Async Function InitializeAsync(Optional parameter As Object = Nothing) As Task
-        Await DelayAsync(20)
-    End Function
-
-    Protected Function DelayAsync(milliseconds As Integer) As Task
-        Dim tcs As New TaskCompletionSource(Of Boolean)
-        Dim timer As New System.Threading.Timer(Sub()
-                                                    tcs.TrySetResult(True)
-                                                End Sub, Nothing, milliseconds, 0)
-
-        Return tcs.Task
+        _IsIntilizing = True
+        Await TaskEx.Delay(0)
+        _IsIntilizing = False
     End Function
 
 #Region "Properties"

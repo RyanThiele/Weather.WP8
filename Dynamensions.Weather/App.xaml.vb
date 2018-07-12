@@ -57,8 +57,10 @@ Partial Public Class App
 
 #Region "Navigation"
 
-    Private Sub OnNavigated(sender As Object, e As NavigationEventArgs)
-        If RootFrame.CurrentSource IsNot Nothing Then
+
+    Private isLoading As Boolean
+    Private Async Sub OnNavigated(sender As Object, e As NavigationEventArgs)
+        If e.Content IsNot Nothing Then
             ' get the name of the view
             Dim view As Page = CType(RootFrame.Content, Page)
             Dim viewType As Type = e.Content.GetType
@@ -66,11 +68,13 @@ Partial Public Class App
 
             Dim viewModelType = System.Type.GetType(viewTypeName)
             Dim viewModel As ViewModelBase = Container.Resolve(viewModelType)
+            isLoading = False
 
             view.DataContext = viewModel
-            AddHandler view.Loaded, Async Sub(s, lea)
-                                        Await viewModel.InitializeAsync()
-                                    End Sub
+            Await viewModel.InitializeAsync()
+            'AddHandler view.Loaded, Async Sub(s, lea)
+            '                            'Await 
+            '                        End Sub
 
         End If
     End Sub

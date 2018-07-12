@@ -8,6 +8,8 @@ Namespace Services
         Function RefreshStationsAsync(deleteExisting As Boolean) As Task
         Function SetSelectedLocationsAsync(locations As IEnumerable(Of Models.Location)) As Task
         Function GetSelectedLocationsAsync() As Task(Of IEnumerable(Of Models.Location))
+        Function GetCurrentLocationAsync() As Task(Of Models.GeoCoordinate)
+
     End Interface
 
 End Namespace
