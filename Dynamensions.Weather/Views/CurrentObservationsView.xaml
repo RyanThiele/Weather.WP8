@@ -12,21 +12,42 @@
              d:DesignHeight="480" d:DesignWidth="480"
              d:DataContext="{d:DesignData /SampleData/CurrentObserevationsSampleData.xaml}">
     <UserControl.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
     </UserControl.Resources>
-
+    
     <StackPanel x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
-        <StackPanel HorizontalAlignment="Center">
-            <TextBlock Text="{Binding CurrentObservations.Location, StringFormat='Station Location: {0}'}" />
-            <TextBlock Text="{Binding CurrentObservations.TemperatureString}" />
-            <!--<TextBlock Text="{Binding CurrentObservations.TemperatureF}" Visibility="{Binding Path=IsUsingImperial, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}" />
-            <TextBlock Text="{Binding CurrentObservations.TemperatureC}" Visibility="{Binding Path=IsUsingImperial, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />-->
-            <TextBlock Text="{Binding CurrentObservations.Weather}" />
-            <TextBlock Text="{Binding CurrentObservations.UpdatedTimeString}" />
-            <TextBlock Text="{Binding CurrentObservations.HeatIndexString}" />
-            <TextBlock Text="{Binding CurrentObservations.WindString}" />
-            <TextBlock Text="{Binding CurrentObservations.DewPointString}" />
-            <Image Source="{Binding CurrentObservations.Icon}" />
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding Icon}" />
+            <StackPanel HorizontalAlignment="Center" Grid.Column="1">
+                <TextBlock Text="{Binding TemperatureString}" Style="{StaticResource PhoneTextExtraLargeStyle}"  />
+                <TextBlock Text="{Binding Weather}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
+                <TextBlock Text="{Binding UpdatedTime, StringFormat='Last Updated: {0}'}" Style="{StaticResource PhoneTextNormalStyle}" />
+                <TextBlock Text="{Binding LastChecked, StringFormat='Last Checked: {0}'}" Style="{StaticResource PhoneTextSmallStyle}" />
+                <StackPanel Orientation="Horizontal" Visibility="{Binding PressureIn, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+                    <Path Data="{StaticResource BarometerPath}" />
+                    <TextBlock Text="{Binding PressureIn, StringFormat='{} {0} in'}" Style="{StaticResource PhoneTextNormalStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding RelativeHumidity, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+                    <Path Data="{StaticResource HumidityPath}" />
+                    <TextBlock Text="{Binding RelativeHumidity, StringFormat='{} {0}%'}" Style="{StaticResource PhoneTextNormalStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding HeatIndexString, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+                    <Path Data="{StaticResource TemperaturePath}" />
+                    <TextBlock Text="{Binding HeatIndexString}" Style="{StaticResource PhoneTextNormalStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding WindString, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+                    <Path Data="{StaticResource WindPath}" />
+                    <TextBlock Text="{Binding WindString}" Style="{StaticResource PhoneTextNormalStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding DewPointString, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+                    <Path Data="{StaticResource DewPointPath}" />
+                    <TextBlock Text="{Binding DewPointString}" Style="{StaticResource PhoneTextNormalStyle}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </UserControl>

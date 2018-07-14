@@ -41,6 +41,5 @@
         Public Property Icon As Uri
         Public Property LastChecked As DateTime
 
-
     End Class
 End Namespace

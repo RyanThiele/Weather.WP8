@@ -73,6 +73,38 @@
       <HintPath>..\packages\Autofac.Wp7.2.4.5.725\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZLib.Phone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ICSharpCode.SharpZLib.Phone.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.Filtering, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Filtering.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.IO.Bmp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Bmp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.IO.Gif, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Gif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.IO.Png, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Png.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageTools.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
@@ -84,6 +116,10 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PhoneCodeContractsAssemblies, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\PhoneCodeContractsAssemblies.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -142,7 +178,9 @@
     <Compile Include="Buses\MessageBus.vb" />
     <Compile Include="Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="Converters\CountToVisibilityConverter.vb" />
+    <Compile Include="Converters\NullOrEmptyToBooleanConverter.vb" />
     <Compile Include="Converters\TimeSpanToStringConverter.vb" />
+    <Compile Include="Converters\UrlToImageConverter.vb" />
     <Compile Include="Entities\DatabaseHelper.vb" />
     <Compile Include="Entities\Location.vb" />
     <Compile Include="Entities\PostalCodeStation.vb" />

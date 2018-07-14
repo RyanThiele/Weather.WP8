@@ -19,13 +19,6 @@
         <DataTemplate x:Key="CurrentObservationsView">
             <StackPanel HorizontalAlignment="Center">
                 <local:CurrentObservationsView DataContext="{Binding CurrentObservations}" />
-                <!--<TextBlock Text="{Binding TemerpatureF}" />
-                <TextBlock Text="{Binding Weather}" />
-                <TextBlock Text="{Binding UpdatedTimeString}" />
-                <TextBlock Text="{Binding HeatIndexString}" />
-                <TextBlock Text="{Binding WindString}" />
-                <TextBlock Text="{Binding DewPointString}" />
-                <Image Source="{Binding Icon}" />-->
             </StackPanel>
         </DataTemplate>
         
