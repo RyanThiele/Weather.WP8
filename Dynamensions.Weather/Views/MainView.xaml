@@ -18,7 +18,9 @@
     <phone:PhoneApplicationPage.Resources>
         <DataTemplate x:Key="CurrentObservationsView">
             <StackPanel HorizontalAlignment="Center">
-                <local:CurrentObservationsView DataContext="{Binding CurrentObservations}" />
+                <local:CurrentObservationsView DataContext="{Binding CurrentObservations}" 
+                                               Foreground="{StaticResource PhoneForegroundBrush}"
+                                               Background="{StaticResource PhoneBackgroundBrush}"/>
             </StackPanel>
         </DataTemplate>
         

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{489eda0e-486f-4b87-9b5c-de70d53107af}" Title="Dynamensions.Weather" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Dynamensions.Weather author" Description="Sample description" Publisher="Dynamensions.Weather">
-    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+  <App xmlns="" ProductID="{489eda0e-486f-4b87-9b5c-de70d53107af}" Title="DynaWeather" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Ryan S. Thiele" Description="Weather app with data from NOAA" Publisher="Dynamensions">
+    <IconPath IsRelative="true" IsResource="false">Weather sun -WF.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
@@ -24,9 +24,9 @@
     <Tokens>
       <PrimaryToken TokenID="Dynamensions.WeatherToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Weather sun -WF.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>Dynamensions.Weather</Title>
+          <Title>Dynamensions Weather</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>

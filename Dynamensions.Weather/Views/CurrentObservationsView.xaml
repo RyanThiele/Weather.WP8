@@ -8,20 +8,20 @@
              FontFamily="{StaticResource PhoneFontFamilyNormal}"
              FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}"
+             Background="{StaticResource PhoneBackgroundBrush}"
              x:Name="CurrentObservations"
              d:DesignHeight="480" d:DesignWidth="480"
              d:DataContext="{d:DesignData /SampleData/CurrentObserevationsSampleData.xaml}">
     <UserControl.Resources>
         <converters:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
     </UserControl.Resources>
-    
-    <StackPanel x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
+    <StackPanel x:Name="LayoutRoot" Background="{Binding ElementName=CurrentObservations, Path=Background}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Icon}" />
+            <Image Source="{Binding Icon}" VerticalAlignment="Top" Margin="0,15" />
             <StackPanel HorizontalAlignment="Center" Grid.Column="1">
                 <TextBlock Text="{Binding TemperatureString}" Style="{StaticResource PhoneTextExtraLargeStyle}"  />
                 <TextBlock Text="{Binding Weather}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />

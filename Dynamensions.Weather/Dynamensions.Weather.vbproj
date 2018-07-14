@@ -260,9 +260,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Weather sun -WF.png" />
     <Content Include="Weather.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Dynamensions.Weather_2018_07_14_13_51_57.sap" />
+    <None Include="Dynamensions.Weather_2018_07_14_13_56_02.sap" />
+    <None Include="Dynamensions.Weather_2018_07_14_15_57_06.sap" />
     <None Include="SampleResponses\CurrentObservations.xsd">
       <SubType>Designer</SubType>
     </None>
