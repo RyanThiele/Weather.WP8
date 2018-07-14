@@ -60,8 +60,12 @@ Namespace Services
             model.HeatIndexF = root.<head_index_f>.SingleOrDefault.ValueIfExists.ToDecimal
             model.HeatIndexC = root.<head_index_c>.SingleOrDefault.ValueIfExists.ToDecimal
             model.VisibilityMi = root.<visibility_mi>.SingleOrDefault.ValueIfExists.ToDecimal
-            model.Icon = New Uri(root.<image>.<url>.SingleOrDefault.ValueIfExists)
 
+            Dim base As String = root.<icon_url_base>.SingleOrDefault.ValueIfExists
+            Dim iconName As String = root.<icon_url_name>.SingleOrDefault.ValueIfExists
+            model.Icon = New Uri(base & iconName)
+
+            model.LastChecked = DateTime.Now
 
             Return model
         End Function
