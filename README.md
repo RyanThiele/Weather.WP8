@@ -2,7 +2,7 @@
 A weather project utilizing NOAA's weather services. Built for Windows Phone 8! <3
 
 
-[![Build Status](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)
+[![Build Status](https://dynamensions.visualstudio.com/Weather/_apis/build/repos/Weather-CI/badge?api-version=4.1-preview.1)](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)
 
 ## Technologies Used
 - MVVM Structure
