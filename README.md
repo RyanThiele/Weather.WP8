@@ -2,7 +2,7 @@
 A weather project utilizing NOAA's weather services. Built for Windows Phone 8! <3
 
 
-[![Build Status](https://dynamensions.visualstudio.com/Weather/_apis/build/repos/Weather-CI/badge?api-version=4.1-preview.1)](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)
+[![Build Status](https://dynamensions.visualstudio.com/_apis/public/build/definitions/b8a4585e-c637-49db-a606-31b185b4b9e6/103/badge)](https://dynamensions.visualstudio.com/_apis/public/build/definitions/b8a4585e-c637-49db-a606-31b185b4b9e6/103/badge)
 
 ## Technologies Used
 - MVVM Structure
@@ -13,3 +13,4 @@ This is a nastolgia project for the one of a kind hand device.
 
 NOTE:
 The project is currently in fast dev mode. Meaning that there may be a big flux in the design.
+/
