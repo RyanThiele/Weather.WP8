@@ -2,11 +2,11 @@
 A weather project utilizing NOAA's weather services. Built for Windows Phone 8! <3
 
 
-[![Build Status](https://dynamensions.visualstudio.com/_apis/public/build/definitions/6706961f-6665-4ef8-9a59-062cef5474a5/8/badge)](https://dynamensions.visualstudio.com/_apis/public/build/definitions/6706961f-6665-4ef8-9a59-062cef5474a5/8/badge)
+[![Build Status](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)](https://dynamensions.visualstudio.com/Weather/_apis/build/status/Weather-CI)
 
 ## Technologies Used
 - MVVM Structure
-- Dependancy Injection using AutoFac
+- Dependancy Injection using .NET's own DI Container (Microsoft.Extensions.DependancyInjection)
 - MessageBus (also known as an Event Aggragator)
 
 This is a nastolgia project for the one of a kind hand device.
