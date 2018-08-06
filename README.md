@@ -2,7 +2,7 @@
 A weather project utilizing NOAA's weather services. Built for Windows Phone 8! <3
 
 
-[![Build Status](https://dynamensions.visualstudio.com/_apis/public/build/definitions/b8a4585e-c637-49db-a606-31b185b4b9e6/103/badge)](https://dynamensions.visualstudio.com/_apis/public/build/definitions/b8a4585e-c637-49db-a606-31b185b4b9e6/103/badge)
+[![Build Status](https://dynamensions.visualstudio.com/b8a4585e-c637-49db-a606-31b185b4b9e6/_apis/build/status/9)](https://dynamensions.visualstudio.com/b8a4585e-c637-49db-a606-31b185b4b9e6/_apis/build/status/9)
 
 ## Technologies Used
 - MVVM Structure
